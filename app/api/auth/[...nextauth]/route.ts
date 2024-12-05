@@ -3,13 +3,10 @@ import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
-  session: {
-    strategy: "jwt",
-  },
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID!,
-      clientSecret: process.env.GOOGLE_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
   callbacks: {
@@ -17,10 +14,10 @@ export const authOptions: NextAuthOptions = {
       if (!profile?.email) {
         throw new Error("No profile");
       }
-
       return true;
     },
   },
 };
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

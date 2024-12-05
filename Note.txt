@@ -1,0 +1,1 @@
+Downgraded to react 18 para makause sa next-auth na dependencies 

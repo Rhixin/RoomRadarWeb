@@ -156,7 +156,7 @@
 }
 
 .toggle-container.inactive {
-  transform: translateX(-200%) !important;
+  transform: translateX(-220%) !important;
 }
 
 .container.active .toggle-container {

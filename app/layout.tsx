@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Providers } from "./context/provider";
+import { Providers } from "../components/provider";
 
 export const metadata: Metadata = {
   title: "Room Radar",

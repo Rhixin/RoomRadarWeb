@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,6 +9,11 @@
   --primary: #2450a6;
   --secondary: #30cff2;
   --tertiary: #2c4373;
+  --font-primary: "Inter", "Inter Fallback";
+}
+
+* {
+  font-family: var(--font-primary);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,5 +1,5 @@
 import "./globals.css";
-import Regsitration from "./components/registration/Regsitration";
+import Regsitration from "../components/registration/registration";
 
 export default function Home() {
   return (

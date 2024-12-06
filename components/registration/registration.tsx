@@ -2,19 +2,18 @@
 import "./registration.css";
 
 import React, { useState } from "react";
-import { FaGoogle, FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { MdHomeWork } from "react-icons/md";
 import { IoPeople } from "react-icons/io5";
-import SignUpForm from "./signupform";
 import TenantForm from "./tenantform";
 import LandlordForm from "./landlordform";
+import LoginForm from "./loginform";
 
 export default function Regsitration() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [chosenType, setChosenType] = useState<number>(0);
-  const [currentStep, setCurrentStep] = useState(1);
 
   const showSignUp = (signupType: number) => {
+    //mura nig states sa user unsa iya ganahan
     //0 for selecting pa si user what account
     //1 selects tenant account signup
     //2 selects landlord account signup
@@ -28,11 +27,11 @@ export default function Regsitration() {
   return (
     <div className={`container ${isSignUp ? "active" : ""}`}>
       <div className="form-container sign-up">
-        <SignUp toggleForm={toggleForm} showSignUp={showSignUp} />
+        <SignUpOptions toggleForm={toggleForm} showSignUp={showSignUp} />
       </div>
 
       <div className="form-container sign-in">
-        <Login toggleForm={toggleForm} />
+        <LoginForm toggleForm={toggleForm} />
       </div>
 
       <div
@@ -62,61 +61,7 @@ export default function Regsitration() {
   );
 }
 
-const Login = ({ toggleForm }) => {
-  return (
-    <form id="login-form">
-      <h1>Sign In</h1>
-      <div className="social-icons">
-        <a href="#" className="icon">
-          <FaGoogle />
-        </a>
-        <a href="#" className="icon">
-          <FaFacebookF />
-        </a>
-        <a href="#" className="icon">
-          <FaGithub />
-        </a>
-        <a href="#" className="icon">
-          <FaLinkedinIn />
-        </a>
-      </div>
-      <span>or use your email password</span>
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <button>Log In</button>
-      <a>
-        Don't Have an Account?{" "}
-        <b className="toggle-text" onClick={toggleForm}>
-          Sign Up
-        </b>
-      </a>
-    </form>
-  );
-};
-function SignUp({ toggleForm, showSignUp }) {
-  const [activeStep, setActiveStep] = useState(0);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    company: "",
-    role: "",
-  });
-
-  const landlordSteps = [
-    "Profile Information",
-    "Property Information",
-    "Account Details",
-    "Confirmation",
-  ];
-
-  const tenantSteps = [
-    "Profile Information",
-    "Account Details",
-    "Confirmation",
-  ];
-
+function SignUpOptions({ toggleForm, showSignUp }) {
   return (
     <form id="signup-form-choices">
       <h1>Create Account As</h1>

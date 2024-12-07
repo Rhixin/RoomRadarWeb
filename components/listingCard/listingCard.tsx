@@ -1,16 +1,16 @@
-'use client'
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { Heart, ChevronLeft, ChevronRight } from 'lucide-react';
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
+import { Heart, ChevronLeft, ChevronRight } from "lucide-react";
 
-const ListingCard = ({ 
+const ListingCard = ({
   location,
   distance,
   price,
   rating,
   images = ["/images/testing-1.avif"],
   isFavorite,
-  owner
+  owner,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -33,17 +33,17 @@ const ListingCard = ({
           fill
           className="object-cover w-full h-full group-hover:scale-110 transition"
         />
-        
+
         {/* Navigation Arrows */}
         {images.length > 1 && (
           <>
-            <button 
+            <button
               onClick={previousImage}
               className="absolute left-2 top-1/2 -translate-y-1/2 bg-white rounded-full p-1 opacity-0 group-hover:opacity-70 hover:opacity-100 transition"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button 
+            <button
               onClick={nextImage}
               className="absolute right-2 top-1/2 -translate-y-1/2 bg-white rounded-full p-1 opacity-0 group-hover:opacity-70 hover:opacity-100 transition"
             >
@@ -63,16 +63,14 @@ const ListingCard = ({
                   setCurrentImageIndex(index);
                 }}
                 className={`w-1.5 h-1.5 rounded-full transition 
-                  ${currentImageIndex === index ? 'bg-white' : 'bg-white/50'}`}
+                  ${currentImageIndex === index ? "bg-white" : "bg-white/50"}`}
               />
             ))}
           </div>
         )}
 
         <button className="absolute top-3 right-3 hover:scale-110 transition">
-          <Heart 
-            className={`w-6 h-6 ${isFavorite ? 'fill-rose-500 stroke-rose-500' : 'stroke-white fill-black/40'}`}
-          />
+          <Heart className="w-6 h-6 stroke-white fill-black/40 stroke-[1]" />
         </button>
       </div>
 
@@ -85,7 +83,7 @@ const ListingCard = ({
           </div>
         </div>
         <p className="text-sm text-gray-500">{distance}</p>
-        
+
         <p className="font-semibold mt-1">
           ₱{price} <span className="font-normal">per month</span>
         </p>

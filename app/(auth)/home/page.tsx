@@ -1,6 +1,7 @@
 import React from "react";
 import SearchBar from "@/components/searchbar/searchBar";
-import ListingCard from "@/components/listingCard/listingCard";
+import ListingCard from "@/components/listingcard/listingcard";
+
 const Home = () => {
   const listings = [
     {
@@ -106,7 +107,7 @@ const Home = () => {
         >
           {/* Dark overlay */}
           <div className="absolute inset-0 bg-black/30"></div>
-  
+
           {/* Content */}
           <div className="relative z-10 flex flex-col gap-3">
             <h1 className="text-4xl sm:text-5xl font-bold text-white">
@@ -121,7 +122,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-  
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8 max-w-[2520px] mx-auto px-2 sm:px-8">
         {listings.map((listing, index) => (
           <ListingCard key={index} {...listing} />

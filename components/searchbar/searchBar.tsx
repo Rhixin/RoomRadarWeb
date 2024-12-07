@@ -25,13 +25,13 @@ export default function SearchBar() {
   };
 
   return (
-    <div className=" max-w-xl mx-auto w-full">
-      <div className="flex items-center border rounded-full shadow-sm hover:shadow-md transition">
+    <div className="max-w-xl mx-auto w-full relative">
+      <div className="flex items-center border rounded-full shadow-sm hover:shadow-md transition bg-white">
         <div className="flex-grow px-6 py-3">
           <input
             type="text"
             placeholder="Search locations..."
-            className="w-full outline-none text-gray-900 "
+            className="w-full outline-none text-gray-900"
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             onFocus={() => setIsOpen(true)}
@@ -43,11 +43,11 @@ export default function SearchBar() {
       </div>
 
       {isOpen && suggestions.length > 0 && (
-        <div className="max-w-xl bg-white mt-1 rounded-xl shadow-md border">
+        <div className="absolute w-full bg-white mt-1 rounded-xl shadow-md border z-50 ">
           {suggestions.map((suggestion, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 p-4 hover:bg-gray-100 cursor-pointer"
+              className="flex items-center gap-3 p-4 hover:bg-gray-100 cursor-pointer rounded-xl"
               onClick={() => {
                 setSearchTerm(suggestion);
                 setIsOpen(false);

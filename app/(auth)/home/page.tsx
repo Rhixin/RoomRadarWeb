@@ -14,7 +14,6 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
-
     },
 
     {
@@ -28,7 +27,6 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
-
     },
 
     {
@@ -42,7 +40,6 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
-
     },
 
     {
@@ -56,7 +53,6 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
-
     },
 
     {
@@ -70,7 +66,6 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
-
     },
     {
       location: "Cebu City, Philippines",
@@ -83,7 +78,6 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
-
     },
     {
       location: "Cebu City, Philippines",
@@ -96,7 +90,6 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: false,
-
     },
 
     // Add more listings as needed
@@ -104,24 +97,35 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-[2520px] mx-auto px-4 sm:px-8 pt-20 pb-8">
-        <div className="text-center space-y-6 mb-16">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900">
-            Welcome to Room Radar
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Find your ideal Boarding House
-          </p>
-          <div className="max-w-3xl mx-auto">
-            <SearchBar />
+      <div className="w-full">
+        <div
+          className="text-center mb-12 py-32 bg-cover bg-center bg-no-repeat relative"
+          style={{
+            backgroundImage: "url('/images/testing-3.avif')",
+          }}
+        >
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/30"></div>
+  
+          {/* Content */}
+          <div className="relative z-10 flex flex-col gap-3">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white">
+              Welcome to Room Radar
+            </h1>
+            <p className="text-lg text-gray-200 max-w-2xl mx-auto">
+              Find your ideal Boarding House
+            </p>
+            <div className="max-w-3xl mx-auto w-full px-4">
+              <SearchBar />
+            </div>
           </div>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
-          {listings.map((listing, index) => (
-            <ListingCard key={index} {...listing} />
-          ))}
-        </div>
+      </div>
+  
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8 max-w-[2520px] mx-auto px-2 sm:px-8">
+        {listings.map((listing, index) => (
+          <ListingCard key={index} {...listing} />
+        ))}
       </div>
     </div>
   );

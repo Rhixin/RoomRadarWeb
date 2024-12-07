@@ -9,7 +9,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white border-b sticky top-0 z-50">
-      <div className="max-w-[2520px] mx-auto px-4 sm:px-8">
+      <div className="max-w-[2520px] mx-auto px-4 sm:px-14">
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo Section */}
           <div className="flex items-center gap-2">
@@ -21,21 +21,20 @@ export default function Navbar() {
                 className="object-contain"
               />
             </Link>
-            <span className="text-base sm:text-lg font-bold">RoomRadar</span>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            <Link
-              href="/host"
-              className="text-sm font-medium hover:text-gray-600"
-            >
-              RoomRadar your home
-            </Link>
-            <button className="flex items-center gap-2 rounded-full border px-4 py-2 hover:shadow-md transition">
-              <Menu className="h-5 w-5" />
-              <User className="h-5 w-5" />
-              <p className="font-bold">Zian Rinzler Valles</p>
+            <button className="relative flex items-center gap-2 rounded-full border px-4 py-2 hover:shadow-md transition">
+              <Menu className="h-4 w-4" />
+
+              {/* Profile Circle */}
+              <span className="relative flex items-center justify-center w-8 h-8 bg-tertiary text-white font-bold rounded-full">
+                Z{/* Notification Badge */}
+                <span className="absolute top-[-4] right-0 flex items-center justify-center w-4 h-4 bg-red-500 text-white text-xs font-bold rounded-full">
+                  1
+                </span>
+              </span>
             </button>
           </div>
 

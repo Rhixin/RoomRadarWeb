@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "@/components/searchbar/searchBar";
-import ListingCard from "@/components/listingcard/listingcard";
+import ListingCard from "@/components/listingcard/listingCard";
 
 const Home = () => {
   const listings = [
@@ -97,7 +97,7 @@ const Home = () => {
   ];
 
   return (
-    <div className=" bg-gray-50">
+    <div className=" bg-gray-50 pb-14">
       <div className="w-full">
         <div
           className="text-center mb-12 py-32 bg-cover bg-center bg-no-repeat relative"
@@ -123,7 +123,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 max-w-[2520px] mx-auto px-2 sm:px-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 max-w-[2520px] mx-auto px-14 sm:px-14">
         {listings.map((listing, index) => (
           <ListingCard key={index} {...listing} />
         ))}

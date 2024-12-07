@@ -9,7 +9,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white sticky top-0 z-50">
-      <div className="max-w-[2520px] mx-auto px-4 sm:px-32 border-b border-faded">
+      <div className="max-w-[2520px] mx-auto px-4 sm:px-24 border-b border-faded">
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo Section */}
           <div className="flex items-center gap-2">

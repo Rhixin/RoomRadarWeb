@@ -4,7 +4,7 @@ import Regsitration from "../components/registration/registration";
 export default function Home() {
   return (
     <div>
-      <Regsitration></Regsitration>
+      <Regsitration />
     </div>
   );
 }

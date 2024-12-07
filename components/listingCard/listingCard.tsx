@@ -70,21 +70,21 @@ const ListingCard = ({
         )}
 
         <button className="absolute top-3 right-3 hover:scale-110 transition">
-          <Heart className="w-6 h-6 stroke-white fill-black/40 stroke-[1]" />
+          <Heart className="w-6 h-6  fill-black/40 stroke-[0]" />
         </button>
       </div>
 
       <div className="mt-2">
         <div className="flex justify-between items-center">
-          <h3 className="font-semibold">{location}</h3>
+          <h3 className="text-sm">{location}</h3>
           <div className="flex items-center gap-1">
             <span>★</span>
-            <span>{rating}</span>
+            <span className="text-sm">{rating}</span>
           </div>
         </div>
-        <p className="text-sm text-gray-500">{distance}</p>
+        <p className="text-[.8rem] text-gray-500">{distance}</p>
 
-        <p className="font-semibold mt-1">
+        <p className="font-semibold mt-1 text-sm">
           ₱{price} <span className="font-normal">per month</span>
         </p>
       </div>

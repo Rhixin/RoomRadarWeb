@@ -15,6 +15,11 @@ import { IoNotifications } from "react-icons/io5";
 import ToggleButton from "./togglebutton";
 
 export default function Navbar({ navbarType }) {
+  /* 
+  Navbar Types
+  1 -> Have Upper and Lower Navbar
+  2 -> Upper Navbar only
+  */
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [radius, setRadius] = useState(20);
 

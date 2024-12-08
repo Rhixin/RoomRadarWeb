@@ -46,12 +46,16 @@ const Map = () => {
             <Marker position={currentLocation} />
           </GoogleMap>
         ) : (
-          <div>
-            <img src="images/rooomradar_loading.gif" alt="Your GIF" />
+          <div className="flex justify-center items-center  ">
+            <img
+              src="images/roomradar_loading.gif"
+              alt="Your GIF"
+              className="w-[30rem] h-[17rem]"
+            />
           </div>
         )}
       </LoadScript>
-      <ShowMapFooter></ShowMapFooter>
+      <ShowMapFooter footerType={2}></ShowMapFooter>
     </>
   );
 };

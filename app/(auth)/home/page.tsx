@@ -155,7 +155,7 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <ShowMapFooter></ShowMapFooter>
+      <ShowMapFooter footerType={1}></ShowMapFooter>
     </>
   );
 };

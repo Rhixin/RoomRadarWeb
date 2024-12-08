@@ -14,9 +14,7 @@ const ListingDetails = () => {
           <div className="flex flex-col gap-6">
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-2xl font-bold mb-2">
-                  Makati Glass House w/ Stunning View
-                </h1>
+                <h1 className="text-2xl font-bold mb-2">Rizwill Apartelle</h1>
                 <div className="flex items-center gap-4 text-sm">
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4" />
@@ -28,7 +26,7 @@ const ListingDetails = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex gap-4">
                 <button className="flex items-center gap-2 px-4 py-2 rounded-lg border hover:bg-gray-50">
                   <Share className="w-4 h-4" />
@@ -44,42 +42,44 @@ const ListingDetails = () => {
             {/* Image Grid Placeholder */}
             <div className="grid grid-cols-4 gap-2 h-[60vh]">
               <div className="col-span-2 row-span-2 relative rounded-l-xl overflow-hidden">
-                <img 
+                <img
                   src="/images/testing-1.avif"
                   alt="Main property view"
                   className="object-cover w-full h-full"
                 />
               </div>
               <div className="relative">
-                <img 
+                <img
                   src="/images/testing-2.avif"
                   alt="Property view 2"
                   className="object-cover w-full h-full"
                 />
               </div>
               <div className="relative rounded-tr-xl overflow-hidden">
-                <img 
+                <img
                   src="/images/testing-3.avif"
                   alt="Property view 3"
                   className="object-cover w-full h-full"
                 />
               </div>
               <div className="relative">
-                <img 
+                <img
                   src="/images/testing-1.avif"
                   alt="Property view 4"
                   className="object-cover w-full h-full"
                 />
               </div>
               <div className="relative rounded-br-xl overflow-hidden group">
-                <img 
+                <img
                   src="/images/testing-1.avif"
                   alt="Property view 5"
                   className="object-cover w-full h-full"
                 />
-                <button 
+                <button
                   className="absolute bottom-4 right-4 flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-md hover:bg-gray-50 transition"
-                  onClick={() => {/* Add your show all photos logic here */}}
+                  onClick={() => {
+                    /* Add your show all photos logic here */
+                  }}
                 >
                   <Image className="w-4 h-4" />
                   <span>Show all photos</span>

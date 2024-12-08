@@ -12,13 +12,20 @@ import { VscSettings } from "react-icons/vsc";
 import { MdOutlineSort } from "react-icons/md";
 import { RiMessage2Fill } from "react-icons/ri";
 import { IoNotifications } from "react-icons/io5";
+import ToggleButton from "./togglebutton";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [radius, setRadius] = useState(20);
+
+  const handleRadiusChange = (e) => {
+    setRadius(e.target.value);
+  };
 
   return (
     <nav className="bg-white sticky top-0 z-50">
       <div className="max-w-[2520px] mx-auto px-4 sm:px-24 border-b border-faded">
+        {/* Upper Navbar Section */}
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo Section */}
           <div className="flex items-center gap-2">
@@ -88,10 +95,11 @@ export default function Navbar() {
         )}
       </div>
 
+      {/* Lower Navbar Section */}
       <div className="max-w-[2520px] mx-auto px-4 sm:px-24 border-b border-faded">
         <div className="flex justify-between items-center h-16 sm:h-20">
           <div
-            className="flex flex-[80%] gap-12 group"
+            className="flex flex-[40%] gap-12 group"
             id="boarding-house-types"
           >
             <button className="absolute left-2 top-1/2 -translate-y-1/2 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 hover:opacity-100 transition z-10 border-2">
@@ -201,28 +209,65 @@ export default function Navbar() {
               <p>Bed Space</p>
             </div>
           </div>
-          <div className="flex-[10%] flex items-center justify-center">
-            <div className="hidden md:flex items-center gap-6">
-              <button className="relative flex items-center gap-2 rounded-xl border px-4 py-4 hover:shadow-md transition">
-                <VscSettings className="h-4 w-4" />
-                <p className="text-sm">Filters</p>
-              </button>
+
+          {/* Show Nearby within this km radius filter */}
+          <div className="flex-[45%] px-2 h-full flex items-center">
+            <div className="relative flex items-center rounded-xl border hover:shadow-md transition text-sm w-full h-[60%] px-2">
+              {/* Slider for selecting radius */}
+              <div className="flex w-[70%] items-center px-2 h-full gap-2">
+                <label className="text-sm">Radius (km):</label>
+                <input
+                  type="range"
+                  min="1"
+                  max="40"
+                  step="1"
+                  value={radius}
+                  className="flex-1 cursor-pointer"
+                  id="radiusSlider"
+                  onChange={(e) => setRadius(e.target.value)}
+                />
+                <input
+                  type="number"
+                  min="1"
+                  max="40"
+                  step="1"
+                  value={radius}
+                  className="w-14 border rounded-md text-center text-sm h-8"
+                  onChange={(e) => {
+                    const value = Math.min(Math.max(e.target.value, 1), 40); // Ensure the value stays within range
+                    setRadius(value);
+                  }}
+                />
+              </div>
+
+              <div className="w-[30%] h-full flex items-center border-l px-2 justify-around">
+                <span className="text-sm whitespace-nowrap">Enable Nearby</span>
+                <ToggleButton></ToggleButton>
+              </div>
             </div>
           </div>
-          <div className="flex-[10%]">
-            <div className="hidden md:flex items-center gap-6">
-              <select
-                className="relative flex items-center gap-2 rounded-xl border py-4 px-4 hover:shadow-md transition w-full text-sm"
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Sort By
-                </option>
-                <option value="price">Price</option>
-                <option value="rating">Rating</option>
-                <option value="date">Date</option>
-              </select>
-            </div>
+
+          {/* Specfic Filters modal */}
+          <div className="flex-[5%] px-2 h-full flex items-center">
+            <button className="relative flex items-center gap-2 rounded-xl border px-4 hover:shadow-md transition w-full h-[60%]">
+              <VscSettings className="h-4 w-4" />
+              <p className="text-sm">Filters</p>
+            </button>
+          </div>
+
+          {/* Sort by filter */}
+          <div className="flex-[10%] pl-2 h-full flex items-center">
+            <select
+              className="relative flex items-center gap-2 rounded-xl border px-4 hover:shadow-md transition text-sm w-full h-[60%]"
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Sort By
+              </option>
+              <option value="price">Price</option>
+              <option value="rating">Rating</option>
+              <option value="date">Date</option>
+            </select>
           </div>
         </div>
       </div>

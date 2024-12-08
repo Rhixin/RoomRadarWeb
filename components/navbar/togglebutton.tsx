@@ -12,7 +12,7 @@ const ToggleButton = () => {
     <button
       onClick={toggleHandler}
       className={`relative w-12 h-6 rounded-full border-2 transition ${
-        isOn ? "bg-primary border-primary" : "bg-gray-300 border-gray-300"
+        isOn ? "bg-primary border-primary" : "bg-gray-300"
       }`}
     >
       <div

@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import Navbar from "@/components/navbar/navbar";
+import ShowMapFooter from "@/components/showmapfooter/showmapfooter";
 
 // Replace with your Google Maps API Key
 const GOOGLE_MAPS_API_KEY = "AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8";
@@ -17,12 +19,16 @@ const center = {
 
 const Map = () => {
   return (
-    <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
-        {/* Marker for the map */}
-        <Marker position={center} />
-      </GoogleMap>
-    </LoadScript>
+    <>
+      <Navbar navbarType={1}></Navbar>
+      <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
+        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
+          {/* Marker for the map */}
+          <Marker position={center} />
+        </GoogleMap>
+      </LoadScript>
+      <ShowMapFooter></ShowMapFooter>
+    </>
   );
 };
 

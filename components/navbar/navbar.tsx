@@ -14,7 +14,7 @@ import { RiMessage2Fill } from "react-icons/ri";
 import { IoNotifications } from "react-icons/io5";
 import ToggleButton from "./togglebutton";
 
-export default function Navbar() {
+export default function Navbar({ navbarType }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [radius, setRadius] = useState(20);
 
@@ -96,7 +96,11 @@ export default function Navbar() {
       </div>
 
       {/* Lower Navbar Section */}
-      <div className="max-w-[2520px] mx-auto px-4 sm:px-24 border-b border-faded">
+      <div
+        className={`max-w-[2520px] mx-auto px-4 sm:px-24 border-b border-faded ${
+          navbarType == 2 ? "hidden" : ""
+        }`}
+      >
         <div className="flex justify-between items-center h-16 sm:h-20">
           <div
             className="flex flex-[40%] gap-12 group"

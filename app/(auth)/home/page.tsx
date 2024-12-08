@@ -1,6 +1,8 @@
 import React from "react";
 import SearchBar from "@/components/searchbar/searchBar";
 import ListingCard from "@/components/listingcard/listingCard";
+import Navbar from "@/components/navbar/navbar";
+import ShowMapFooter from "@/components/showmapfooter/showmapfooter";
 const Home = () => {
   const listings = [
     {
@@ -145,6 +147,7 @@ const Home = () => {
 
   return (
     <>
+      <Navbar navbarType={1}></Navbar>
       <div className="max-w-[2520px] mx-auto px-4 sm:px-24 pb-8 pt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
           {listings.map((listing, index) => (
@@ -152,6 +155,7 @@ const Home = () => {
           ))}
         </div>
       </div>
+      <ShowMapFooter></ShowMapFooter>
     </>
   );
 };

@@ -4,11 +4,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #e2e2e2;
+  --background: #f0f5f9;
   --foreground: #171717;
   --primary: #2450a6;
   --secondary: #30cff2;
   --tertiary: #2c4373;
+  --faded: #ebebeb;
   --font-primary: "Inter", "Inter Fallback";
 }
 

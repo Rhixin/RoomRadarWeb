@@ -14,6 +14,7 @@ export default {
         primary: "var(--primary)",
         secondary: "var(--secondary)",
         tertiary: "var(--tertiary)",
+        faded: "var(--faded)",
       },
     },
   },

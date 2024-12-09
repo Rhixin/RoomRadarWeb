@@ -4,6 +4,9 @@ import Navbar from "@/components/navbar/navbar";
 import { Share, Heart, Star, MapPin, Image } from "lucide-react";
 import { NavbarProvider } from "@/components/providers/navbarprovider";
 import PhotoModal from "@/components/photoModal/photoModal";
+import MainSectionTitle from "@/components/ListingDetails/mainSectionTitle";
+import AboutPlace from "@/components/ListingDetails/aboutPlace";
+import PlaceAmenities from "@/components/ListingDetails/PlaceAmenities";
 const ListingDetails = () => {
   const [showModal, setShowModal] = React.useState(false);
   const images = [
@@ -87,20 +90,33 @@ const ListingDetails = () => {
                 <button
                   className="absolute bottom-4 right-4 flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-md hover:bg-gray-50 transition"
                   onClick={() => setShowModal(true)}
-
                 >
                   <Image className="w-4 h-4" />
                   <span>Show all photos</span>
                 </button>
               </div>
 
-              <PhotoModal 
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        images={images}
-      />
+              <PhotoModal
+                isOpen={showModal}
+                onClose={() => setShowModal(false)}
+                images={images}
+              />
             </div>
           </div>
+
+          <MainSectionTitle
+            title="Room in Cebu City, Philippines"
+            beds={2}
+            bathrooms={2}
+            hostName="Justin Barro"
+            hostType="RoomRadar"
+            hostingYears={10}
+            hostImage="/images/test-justin.jpg"
+          />
+
+          <AboutPlace />
+          <PlaceAmenities />
+
         </div>
       </div>
     </>

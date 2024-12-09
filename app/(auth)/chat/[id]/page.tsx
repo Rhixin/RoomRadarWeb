@@ -4,10 +4,11 @@ import { IoMdCall } from "react-icons/io";
 import Message from "@/components/message/message";
 import { CiSearch } from "react-icons/ci";
 import { IoSendSharp } from "react-icons/io5";
+import ChatSystem from "../page";
 
 const Conversation = () => {
   return (
-    <>
+    <ChatSystem>
       <div className="w-full px-8 flex items-center gap-3 border-b border-faded py-2">
         <div className="w-14">
           <Image
@@ -150,7 +151,7 @@ const Conversation = () => {
           </div>
         </div>
       </div>
-    </>
+    </ChatSystem>
   );
 };
 

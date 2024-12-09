@@ -3,6 +3,28 @@ import React from "react";
 import { CiSearch } from "react-icons/ci";
 import ConvoPreview from "@/components/convopreview/convopreview";
 import { IoMdCall } from "react-icons/io";
+import { FaExclamationTriangle } from "react-icons/fa";
+
+const previewConversations = [
+  {
+    id: 1,
+    chatmateName: "John Doe",
+    latestMessage: "Hey! Is the room still available?",
+    time: "2:30 PM",
+  },
+  {
+    id: 2,
+    chatmateName: "Jane Smith",
+    latestMessage: "Thanks for the info!",
+    time: "12:00 AM",
+  },
+  {
+    id: 3,
+    chatmateName: "Michael Lee",
+    latestMessage: "Can we schedule a visit?",
+    time: "5:20 AM",
+  },
+];
 
 const ChatSystem = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -30,19 +52,13 @@ const ChatSystem = ({ children }: { children: React.ReactNode }) => {
             </div>
 
             <div className="h-[82vh] flex items-center flex-col overflow-y-auto">
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
-              <ConvoPreview></ConvoPreview>
+              {previewConversations.length === 0 ? (
+                <div className="m-4 font-light">No results</div>
+              ) : (
+                previewConversations.map((convo, index) => (
+                  <ConvoPreview key={convo.id} {...convo} />
+                ))
+              )}
             </div>
           </div>
 

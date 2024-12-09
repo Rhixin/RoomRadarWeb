@@ -13,6 +13,7 @@ import { MdOutlineSort } from "react-icons/md";
 import { RiMessage2Fill } from "react-icons/ri";
 import { IoNotifications } from "react-icons/io5";
 import ToggleButton from "./togglebutton";
+import { CiSearch } from "react-icons/ci";
 
 export default function Navbar({ navbarType }) {
   /* 
@@ -47,6 +48,23 @@ export default function Navbar({ navbarType }) {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-4">
+            {/* Search bar */}
+            <div className="sticky w-[100%] py-2 pr-8 pl-2">
+              <input
+                type="text"
+                placeholder="Search conversation..."
+                className="w-full py-3 pl-12 pr-4 text-sm text-gray-800 bg-gray-100 rounded-full shadow focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition duration-300"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute top-1/2 left-4 transform -translate-y-1/2 h-5 w-5 text-gray-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <CiSearch className="text-2xl"></CiSearch>
+              </svg>
+            </div>
             {/* Messages Icon */}
             <span className="relative flex items-center justify-center w-8 h-8 text-white hover:scale-110 transition-transform duration-200 cursor-pointer">
               <RiMessage2Fill className="text-tertiary text-[1.5rem]"></RiMessage2Fill>

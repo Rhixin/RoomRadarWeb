@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const ConvoPreview = () => {
+const ConvoPreview = ({ chatmateName, latestMessage, time }) => {
   return (
     <div className="w-[100%] min-h-[4.5rem] rounded-md hover:bg-gray-200 transition cursor-pointer flex flex-row">
       <div className="w-18 p-2">
@@ -14,8 +14,11 @@ const ConvoPreview = () => {
         />
       </div>
       <div className="flex flex-col justify-center flex-1">
-        <p className="text-[1rem] font-semibold">Aling Merna</p>
-        <p className="text-[.8rem]">You: Hi baby nikaon naka?!</p>
+        <p className="text-[1rem] font-semibold">{chatmateName}</p>
+        <div>
+          <p className="text-[.8rem]">{latestMessage}</p>
+          <p className="text-[.55rem]">{time}</p>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,48 @@
+.bhouse-type {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 4rem;
+}
+
+.bhouse-type:hover {
+  font-weight: bold;
+}
+
+.bhouse-type p {
+  font-size: 0.7rem;
+  color: var(--primary);
+}
+
+.type-icon {
+  font-size: 1.5rem;
+  color: var(--tertiary);
+}
+
+#boarding-house-types {
+  overflow-x: hidden;
+  position: relative; /* Ensure pseudo-elements are positioned relative to the container */
+  height: 100%;
+  overflow-y: hidden;
+}
+
+#boarding-house-types::before,
+#boarding-house-types::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50px; /* Adjust width as needed */
+  pointer-events: none; /* Ensure it doesn't block interactions */
+}
+
+#boarding-house-types::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0)
+  );
+}

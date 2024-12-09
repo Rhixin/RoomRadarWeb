@@ -4,12 +4,36 @@
 @tailwind utilities;
 
 :root {
-  --background: #e2e2e2;
+  --background: #f0f5f9;
   --foreground: #171717;
   --primary: #2450a6;
   --secondary: #30cff2;
   --tertiary: #2c4373;
+  --faded: #ebebeb;
   --font-primary: "Inter", "Inter Fallback";
+}
+
+/* SCROLLBAR SETTINGS */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+/* background of the scrollbar */
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #ffffff;
+}
+
+/* scrollbar hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 
 * {
@@ -25,5 +49,5 @@
 
 body {
   background-color: var(--background);
-  height: 100vh;
+  min-height: 100vh;
 }

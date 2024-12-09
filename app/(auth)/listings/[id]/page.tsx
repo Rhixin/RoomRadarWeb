@@ -3,8 +3,16 @@ import React from "react";
 import Navbar from "@/components/navbar/navbar";
 import { Share, Heart, Star, MapPin, Image } from "lucide-react";
 import { NavbarProvider } from "@/components/providers/navbarprovider";
-
+import PhotoModal from "@/components/photoModal/photoModal";
 const ListingDetails = () => {
+  const [showModal, setShowModal] = React.useState(false);
+  const images = [
+    "/images/testing-1.avif",
+    "/images/testing-2.avif",
+    "/images/testing-3.avif",
+    "/images/testing-1.avif",
+    "/images/testing-1.avif",
+  ];
   return (
     <>
       <Navbar navbarType={2}></Navbar>
@@ -78,14 +86,19 @@ const ListingDetails = () => {
                 />
                 <button
                   className="absolute bottom-4 right-4 flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-md hover:bg-gray-50 transition"
-                  onClick={() => {
-                    /* Add your show all photos logic here */
-                  }}
+                  onClick={() => setShowModal(true)}
+
                 >
                   <Image className="w-4 h-4" />
                   <span>Show all photos</span>
                 </button>
               </div>
+
+              <PhotoModal 
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        images={images}
+      />
             </div>
           </div>
         </div>

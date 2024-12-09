@@ -63,7 +63,10 @@ export default function Regsitration() {
 
 function SignUpOptions({ toggleForm, showSignUp }) {
   return (
-    <form id="signup-form-choices">
+    <form
+      id="signup-form-choices"
+      className="flex flex-col justify-center items-center"
+    >
       <h1>Create Account As</h1>
 
       <div id="role-choice">

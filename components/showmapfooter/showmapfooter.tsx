@@ -21,9 +21,13 @@ const ShowMapFooter = ({ footerType }) => {
       </button>
 
       {/* Add Button - Positioned absolutely to the right */}
-      <button className="absolute right-6 bottom-8 flex items-center gap-2 bg-tertiary rounded-full p-6 hover:scale-110 transition-transform duration-200 text-white">
-        <IoAdd className="text-[2rem]" />
-      </button>
+      {footerType === 1 ? (
+        <button className="absolute right-6 bottom-8 flex items-center gap-2 bg-tertiary rounded-full p-6 hover:scale-110 transition-transform duration-200 text-white">
+          <IoAdd className="text-[2rem]" />
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

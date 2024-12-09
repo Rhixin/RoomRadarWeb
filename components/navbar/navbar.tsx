@@ -1,7 +1,7 @@
 "use client";
 import "./navbar.css";
 
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Globe, Menu, User, X } from "lucide-react";
@@ -14,19 +14,20 @@ import { RiMessage2Fill } from "react-icons/ri";
 import { IoNotifications } from "react-icons/io5";
 import ToggleButton from "./togglebutton";
 import { CiSearch } from "react-icons/ci";
+import { NavbarContext } from "../providers/navbarprovider";
 
-export default function Navbar({ navbarType }) {
+export default function Navbar({ navbarType: initialNavbarType }) {
   /* 
   Navbar Types
   1 -> Have Upper and Lower Navbar
   2 -> Upper Navbar only
   */
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [radius, setRadius] = useState(20);
+  const [navbarType, setNavbarType] = useState(initialNavbarType);
+  const context = useContext(NavbarContext);
 
-  const handleRadiusChange = (e) => {
-    setRadius(e.target.value);
-  };
+  if (!context) return null;
+
+  const { isMenuOpen, setIsMenuOpen, radius, setRadius } = context;
 
   return (
     <nav className="bg-white sticky top-0 z-50">

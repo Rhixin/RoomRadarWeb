@@ -4,6 +4,7 @@ import { CiSearch } from "react-icons/ci";
 import ConvoPreview from "@/components/convopreview/convopreview";
 import { IoMdCall } from "react-icons/io";
 import { FaExclamationTriangle } from "react-icons/fa";
+import { NavbarProvider } from "@/components/providers/navbarprovider";
 
 const previewConversations = [
   {

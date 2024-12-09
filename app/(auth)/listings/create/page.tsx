@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar/navbar";
+import { NavbarProvider } from "@/components/providers/navbarprovider";
 import React from "react";
 
 const CreateListing = () => {

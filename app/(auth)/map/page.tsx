@@ -1,8 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  InfoWindow,
+  LoadScript,
+  Marker,
+} from "@react-google-maps/api";
 import Navbar from "@/components/navbar/navbar";
 import ShowMapFooter from "@/components/showmapfooter/showmapfooter";
+import { NavbarProvider } from "@/components/providers/navbarprovider";
 
 // Replace with your Google Maps API Key
 const GOOGLE_MAPS_API_KEY = "AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8";
@@ -32,6 +38,8 @@ const Map = () => {
     }
   }, []);
 
+  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+
   return (
     <>
       <Navbar navbarType={1}></Navbar>
@@ -42,8 +50,24 @@ const Map = () => {
             center={currentLocation}
             zoom={12}
           >
-            {/* Optional: Add a marker at user's current location */}
-            <Marker position={currentLocation} />
+            {/* Marker */}
+            <Marker
+              position={currentLocation}
+              onClick={() => setInfoWindowOpen(true)} // Show InfoWindow on marker click
+            />
+
+            {/* InfoWindow */}
+            {infoWindowOpen && (
+              <InfoWindow
+                position={currentLocation}
+                onCloseClick={() => setInfoWindowOpen(false)} // Hide InfoWindow when closed
+              >
+                <div>
+                  <h4>Current Location</h4>
+                  <p>This is your pinned marker's location.</p>
+                </div>
+              </InfoWindow>
+            )}
           </GoogleMap>
         ) : (
           <div className="flex justify-center items-center  ">

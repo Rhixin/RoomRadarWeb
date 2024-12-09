@@ -3,6 +3,7 @@ import SearchBar from "@/components/searchbar/searchBar";
 import ListingCard from "@/components/listingcard/listingCard";
 import Navbar from "@/components/navbar/navbar";
 import ShowMapFooter from "@/components/showmapfooter/showmapfooter";
+import { NavbarProvider } from "@/components/providers/navbarprovider";
 const Home = () => {
   const listings = [
     {

@@ -2,11 +2,12 @@
 import React from "react";
 import Navbar from "@/components/navbar/navbar";
 import { Share, Heart, Star, MapPin, Image } from "lucide-react";
+import { NavbarProvider } from "@/components/providers/navbarprovider";
 
 const ListingDetails = () => {
   return (
     <>
-      <Navbar navbarType={2} />
+      <Navbar navbarType={2}></Navbar>
 
       <div className="py-8">
         <div className="max-w-[2520px] mx-auto px-4 sm:px-24">

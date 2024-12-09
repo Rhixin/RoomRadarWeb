@@ -1,12 +1,18 @@
 "use client";
 import { FaMapMarked } from "react-icons/fa";
 import { IoAdd } from "react-icons/io5";
-import { FaList } from "react-icons/fa6";
 import { FaListUl } from "react-icons/fa6";
 
-import React from "react";
+import React, { useState } from "react";
+import CreateListingForm from "../createListing/createlistingform";
 
 const ShowMapFooter = ({ footerType }) => {
+  const [showModal, setShowModal] = useState(false);
+  // Toggle modal visibility
+  const toggleModal = () => {
+    setShowModal((prev) => !prev);
+  };
+
   return (
     <div className="fixed bottom-0 left-0 w-full flex justify-center py-8">
       {/* Map View Button */}
@@ -22,9 +28,15 @@ const ShowMapFooter = ({ footerType }) => {
 
       {/* Add Button - Positioned absolutely to the right */}
       {footerType === 1 ? (
-        <button className="absolute right-6 bottom-8 flex items-center gap-2 bg-tertiary rounded-full p-6 hover:scale-110 transition-transform duration-200 text-white">
-          <IoAdd className="text-[2rem]" />
-        </button>
+        <div>
+          {/* Your button to toggle the modal */}
+          <button
+            className="absolute right-6 bottom-8 flex items-center gap-2 bg-tertiary rounded-full p-6 hover:scale-110 transition-transform duration-200 text-white"
+            onClick={toggleModal} // Handle button click
+          >
+            <IoAdd className="text-[2rem]" />
+          </button>
+        </div>
       ) : (
         ""
       )}

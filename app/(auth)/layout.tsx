@@ -1,3 +1,5 @@
+import CreateListingForm from "@/components/createListing/createlistingform";
+
 export default function AuthLayout({
   children,
 }: {

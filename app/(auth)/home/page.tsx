@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "@/components/searchbar/searchBar";
-import ListingCard from "@/components/listingcard/listingCard";
+import ListingCard from "@/components/listingcard/listingcard";
 import Navbar from "@/components/navbar/navbar";
 import ShowMapFooter from "@/components/showmapfooter/showmapfooter";
 import { NavbarProvider } from "@/components/providers/navbarprovider";
@@ -17,6 +17,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
 
     {
@@ -30,6 +32,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
 
     {
@@ -43,6 +47,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
 
     {
@@ -56,6 +62,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
 
     {
@@ -69,6 +77,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
     {
       location: "Cebu City, Philippines",
@@ -81,6 +91,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
     {
       location: "Cebu City, Philippines",
@@ -93,6 +105,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: false,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
     {
       location: "Cebu City, Philippines",
@@ -105,6 +119,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
     {
       location: "Cebu City, Philippines",
@@ -117,6 +133,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: false,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
     {
       location: "Cebu City, Philippines",
@@ -129,6 +147,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: true,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
     {
       location: "Cebu City, Philippines",
@@ -141,6 +161,8 @@ const Home = () => {
         "/images/testing-3.avif",
       ],
       isFavorite: false,
+      landlord: "Aling Merna",
+      landlordContactDetails: "09271935386",
     },
 
     // Add more listings as needed

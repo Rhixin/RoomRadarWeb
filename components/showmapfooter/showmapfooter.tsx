@@ -4,7 +4,7 @@ import { IoAdd } from "react-icons/io5";
 import { FaListUl } from "react-icons/fa6";
 
 import React, { useState } from "react";
-import CreateListingForm from "../createListing/createlistingform";
+import CreateListingForm from "../createlisting/createlistingform";
 
 const ShowMapFooter = ({ footerType }) => {
   const [showModal, setShowModal] = useState(false);
@@ -26,20 +26,15 @@ const ShowMapFooter = ({ footerType }) => {
         )}
       </button>
 
-      {/* Add Button - Positioned absolutely to the right */}
-      {footerType === 1 ? (
-        <div>
-          {/* Your button to toggle the modal */}
-          <button
-            className="absolute right-6 bottom-8 flex items-center gap-2 bg-tertiary rounded-full p-6 hover:scale-110 transition-transform duration-200 text-white"
-            onClick={toggleModal} // Handle button click
-          >
-            <IoAdd className="text-[2rem]" />
-          </button>
-        </div>
-      ) : (
-        ""
-      )}
+      <div>
+        {/* Your button to toggle the modal */}
+        <button
+          className="absolute right-6 bottom-8 flex items-center gap-2 bg-tertiary rounded-full p-6 hover:scale-110 transition-transform duration-200 text-white"
+          onClick={toggleModal} // Handle button click
+        >
+          <IoAdd className="text-[2rem]" />
+        </button>
+      </div>
     </div>
   );
 };

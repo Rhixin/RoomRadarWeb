@@ -14,6 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* <script
+        src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8&callback=initialize`}
+        async
+        defer
+      ></script> */}
       <body>
         <Providers>{children}</Providers>
       </body>

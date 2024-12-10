@@ -1,27 +1,25 @@
 import React from "react";
 
-const MainSectionTitle = ({ 
+const MainSectionTitle = ({
   title,
   beds,
   bathrooms,
   hostName,
   hostType,
   hostingYears,
-  hostImage 
+  hostImage,
 }) => {
   return (
     <div className="mt-8 py-4">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold mb-1">
-            {title}
-          </h1>
+          <h1 className="text-xl sm:text-2xl font-bold mb-1">{title}</h1>
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <h1>{beds} Beds</h1>
             <h1>{bathrooms} Bathrooms</h1>
           </div>
         </div>
-        
+
         {/* <div className="flex items-center gap-4">
           <img
             src={hostImage}

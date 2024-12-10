@@ -4,9 +4,11 @@ import Navbar from "@/components/navbar/navbar";
 import { Share, Heart, Star, MapPin, Image } from "lucide-react";
 import { NavbarProvider } from "@/components/providers/navbarprovider";
 import PhotoModal from "@/components/photoModal/photoModal";
-import MainSectionTitle from "@/components/ListingDetails/mainSectionTitle";
-import AboutPlace from "@/components/ListingDetails/aboutPlace";
-import PlaceAmenities from "@/components/ListingDetails/PlaceAmenities";
+import MainSectionTitle from "@/components/listingdetails/mainsectiontitle";
+import AboutPlace from "@/components/listingdetails/aboutplace";
+import PlaceAmenities from "@/components/listingdetails/placeamenities";
+import StreetViewPanorama from "@/components/panorama/streetviewpanorama";
+
 const ListingDetails = () => {
   const [showModal, setShowModal] = React.useState(false);
   const images = [
@@ -19,6 +21,12 @@ const ListingDetails = () => {
   return (
     <>
       <Navbar navbarType={2}></Navbar>
+
+      <script
+        src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8&callback=initialize`}
+        async
+        defer
+      ></script>
 
       <div className="py-8">
         <div className="max-w-[2520px] mx-auto px-4 sm:px-24">
@@ -116,7 +124,19 @@ const ListingDetails = () => {
 
           <AboutPlace />
           <PlaceAmenities />
+          {/* <iframe
+            width="600"
+            height="450"
+            style={{ border: 0 }}
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8
+    &q=Space+Needle,Seattle+WA"
+            title="Embedded Google Map"
+          ></iframe> */}
 
+          <StreetViewPanorama lat={10.293647} lng={123.867631} />
         </div>
       </div>
     </>

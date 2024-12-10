@@ -1,8 +1,10 @@
 "use client";
+import "./listingcard.css";
 import React, { useState } from "react";
 import Image from "next/image";
 import { Heart, ChevronLeft, ChevronRight } from "lucide-react";
-import "./listingcard.css";
+import { IoCall } from "react-icons/io5";
+
 const ListingCard = ({
   location,
   distance,
@@ -10,7 +12,8 @@ const ListingCard = ({
   rating,
   images = ["/images/testing-1.avif"],
   isFavorite,
-  owner,
+  landlord,
+  landlordContactDetails,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showDetails, setShowDetails] = useState(false);
@@ -35,14 +38,14 @@ const ListingCard = ({
             fill
             className="object-cover w-full h-full group-hover:scale-110 transition"
           />
-          s{/* Lanlord Holder */}
+          {/* Lanlord Holder */}
           <div
-            className={`absolute left-4 top-[70%] flex flex-row  bg-white rounded-full landlord-holder ${
+            className={`absolute left-4 top-[75%] flex flex-row w-[80%]  bg-transparent rounded-full landlord-holder ${
               showDetails ? "landlord-expand" : ""
             }`}
           >
             <img
-              className="w-14 h-14 rounded-full cursor-pointer"
+              className="w-[20%] rounded-full cursor-pointer"
               src="/images/landlord_placeholder.jpg"
               alt="profile"
               onMouseEnter={() => setShowDetails(true)}
@@ -51,12 +54,18 @@ const ListingCard = ({
 
             {/* Animated details */}
             <div
-              className={`ml-4 mr-6 text-tertiary flex-col justify-center items-center ${
+              className={`ml-[4%] mr-6 text-tertiary flex-col justify-center items-start ${
                 showDetails ? "showDetails" : "hideDetails"
               }`}
             >
-              <h4 className="text-[.9rem] font-semibold">Aling Merna</h4>
-              <p className="text-[.7rem] text-gray-700">📞09271935386</p>
+              <h4 className="text-[80%] font-semibold">{landlord}</h4>
+
+              <div className="flex flex-row">
+                <IoCall className="text-[80%] mr-1" />
+                <p className="text-[70%] text-gray-700">
+                  {landlordContactDetails}
+                </p>
+              </div>
             </div>
           </div>
           {/* Navigation Arrows */}

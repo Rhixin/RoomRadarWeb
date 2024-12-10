@@ -1,85 +1,49 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import {
-  GoogleMap,
-  InfoWindow,
-  LoadScript,
-  Marker,
-} from "@react-google-maps/api";
 import Navbar from "@/components/navbar/navbar";
-import ShowMapFooter from "@/components/showmapfooter/showmapfooter";
-import { NavbarProvider } from "@/components/providers/navbarprovider";
 
-// Replace with your Google Maps API Key
-const GOOGLE_MAPS_API_KEY = "AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8";
-
-const containerStyle = {
-  width: "100%",
-  height: "80.5vh", // Makes the map take up the entire viewport height
-};
+import BoardingHouseMapView, {
+  BoardingHouseMapViewProps,
+  LatLng,
+} from "@/components/boardinghousemapview/boardinghousemapview";
+import MapComponent from "@/components/map/mapcomponent";
 
 const Map = () => {
-  const [currentLocation, setCurrentLocation] = useState(null);
+  //Payload example
+  const boardingHouseProps1: BoardingHouseMapViewProps = {
+    mapLocation: {
+      lat: 10.293647,
+      lng: 123.867631,
+    }, //placeholder sa try myuy location sa
+    location: "Cebu City, Philippines",
+    distance: "5 kilometers away", //to be calculated pa
+    price: "2,225",
+    rating: 4.9,
+    images: ["/images/testing-1.avif", "/images/testing-2.avif"],
+    isFavorite: false,
+    landlord: "John Doe",
+    landlordContactDetails: "09271935386",
+  };
 
-  // Get user's current location
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setCurrentLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error("Error fetching current location", error);
-        }
-      );
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
-  }, []);
+  const boardingHouseProps2: BoardingHouseMapViewProps = {
+    mapLocation: {
+      lat: 10.243647,
+      lng: 123.767631,
+    }, //placeholder sa try myuy location sa
+    location: "Cebu City, Philippines",
+    distance: "5 kilometers away", //to be calculated pa
+    price: "2,225",
+    rating: 4.9,
+    images: ["/images/testing-1.avif", "/images/testing-2.avif"],
+    isFavorite: false,
+    landlord: "John Doe",
+    landlordContactDetails: "09271935386",
+  };
 
-  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+  const arrayListings = [boardingHouseProps1, boardingHouseProps2];
 
   return (
     <>
       <Navbar navbarType={1}></Navbar>
-      <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
-        {currentLocation ? (
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={currentLocation}
-            zoom={12}
-          >
-            {/* Marker */}
-            <Marker
-              position={currentLocation}
-              onClick={() => setInfoWindowOpen(true)} // Show InfoWindow on marker click
-            />
-
-            {/* InfoWindow */}
-            {infoWindowOpen && (
-              <InfoWindow
-                position={currentLocation}
-                onCloseClick={() => setInfoWindowOpen(false)} // Hide InfoWindow when closed
-              >
-                <div>
-                  <h4>Current Location</h4>
-                  <p>This is your pinned marker's location.</p>
-                </div>
-              </InfoWindow>
-            )}
-          </GoogleMap>
-        ) : (
-          <div className="flex justify-center items-center  ">
-            <img
-              src="images/roomradar_loading.gif"
-              alt="Your GIF"
-              className="w-[30rem] h-[17rem]"
-            />
-          </div>
-        )}
-      </LoadScript>
-      <ShowMapFooter footerType={2}></ShowMapFooter>
+      <MapComponent arrayListings={arrayListings}></MapComponent>
     </>
   );
 };

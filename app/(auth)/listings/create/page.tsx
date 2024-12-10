@@ -1,6 +1,6 @@
 "use client";
 import Navbar from "@/components/navbar/navbar";
-import CreateListingForm from "@/components/createListing/createlistingform";
+import CreateListingForm from "@/components/createlisting/createlistingform";
 import Registration from "@/components/registration/registration";
 import StepIndicator from "@/components/registration/stepindicator";
 

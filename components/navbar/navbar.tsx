@@ -248,7 +248,7 @@ export default function Navbar({ navbarType: initialNavbarType }) {
                 <input
                   type="range"
                   min="1"
-                  max="40"
+                  max="100"
                   step="1"
                   value={radius}
                   className="flex-1 cursor-pointer"
@@ -258,12 +258,12 @@ export default function Navbar({ navbarType: initialNavbarType }) {
                 <input
                   type="number"
                   min="1"
-                  max="40"
+                  max="100"
                   step="1"
                   value={radius}
                   className="w-14 border rounded-md text-center text-sm h-8"
                   onChange={(e) => {
-                    const value = Math.min(Math.max(e.target.value, 1), 40); // Ensure the value stays within range
+                    const value = Math.min(Math.max(e.target.value, 1), 100); // Ensure the value stays within range
                     setRadius(value);
                   }}
                 />

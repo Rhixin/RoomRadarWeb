@@ -13,6 +13,7 @@ import { MdOutlineSort } from "react-icons/md";
 import { RiMessage2Fill } from "react-icons/ri";
 import { IoNotifications } from "react-icons/io5";
 import ToggleButton from "./togglebutton";
+import MenuBar from "../menubar/menubar";
 
 export default function Navbar({ navbarType }) {
   /* 
@@ -28,8 +29,13 @@ export default function Navbar({ navbarType }) {
   };
 
   return (
+    
+   
+   
     <nav className="bg-white sticky top-0 z-50">
+
       <div className="max-w-[2520px] mx-auto px-4 sm:px-24 border-b border-faded">
+        
         {/* Upper Navbar Section */}
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo Section */}
@@ -280,6 +286,9 @@ export default function Navbar({ navbarType }) {
           </div>
         </div>
       </div>
+
+      <MenuBar></MenuBar>
     </nav>
+    
   );
 }

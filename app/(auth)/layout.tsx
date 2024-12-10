@@ -1,3 +1,5 @@
+import MenuBar from "@/components/menubar/menubar";
+
 export default function AuthLayout({
   children,
 }: {

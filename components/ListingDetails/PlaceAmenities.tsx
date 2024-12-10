@@ -21,15 +21,15 @@ const PlaceAmenities = () => {
   ];
 
   return (
-    <div className="mt-8 ">
-      <h2 className="text-xl sm:text-2xl font-bold mb-4">
+    <div className="mt-14 ">
+      <h2 className="text-xl sm:text-2xl font-semibold mb-4">
         What this place offers
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {amenities.map((item, index) => (
           <div key={index} className="flex items-center gap-4">
-            <div className="text-gray-600">{item.icon}</div>
-            <span>{item.label}</span>
+            <div className="text-gray-600 text-lg">{item.icon}</div>
+            <span className="text-lg">{item.label}</span>
           </div>
         ))}
       </div>

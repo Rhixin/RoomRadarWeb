@@ -22,6 +22,7 @@ export type BoardingHouseMapViewProps = {
   landlord: string; // The name of the landlord
   landlordContactDetails: string; // The contact details of the landlord (e.g., phone number or email)
   handleMarkerClick: (param: LatLng) => void;
+  setClickedLocation: (location: LatLng) => void;
 };
 
 const BoardingHouseMapView: React.FC<BoardingHouseMapViewProps> = ({
@@ -35,6 +36,7 @@ const BoardingHouseMapView: React.FC<BoardingHouseMapViewProps> = ({
   landlord,
   landlordContactDetails,
   handleMarkerClick,
+  setClickedLocation,
 }) => {
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
   const listing = {
@@ -60,14 +62,21 @@ const BoardingHouseMapView: React.FC<BoardingHouseMapViewProps> = ({
 
       {/* InfoWindow */}
       {infoWindowOpen && (
-        <div onMouseLeave={() => setInfoWindowOpen(false)}>
-          <InfoWindow position={listing.mapLocation}>
+        <div>
+          <InfoWindow
+            position={listing.mapLocation}
+            onCloseClick={() => setInfoWindowOpen(false)}
+          >
             <div style={{ pointerEvents: "auto" }} className="flex flex-col">
               <ListingCard {...listing} />
-              <div className="h-auto py-2 flex flex-row text-center items-center justify-end">
+              <div className="h-auto py-2 flex flex-row text-center items-center justify-between">
+                <p className="text-secondary cursor-pointer">See More</p>
                 <FaDirections
                   className=" rounded-full w-6 h-6 text-tertiary hover:scale-110 m-1 transition cursor-pointer"
-                  onClick={() => handleMarkerClick?.(mapLocation)}
+                  onClick={() => {
+                    handleMarkerClick?.(mapLocation);
+                    setClickedLocation(mapLocation);
+                  }}
                 />
               </div>
             </div>

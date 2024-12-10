@@ -6,6 +6,7 @@ import {
   Marker,
   Circle,
   DirectionsRenderer,
+  StreetViewPanorama,
 } from "@react-google-maps/api";
 import Navbar from "@/components/navbar/navbar";
 import ShowMapFooter from "@/components/showmapfooter/showmapfooter";
@@ -31,7 +32,7 @@ const MapComponent = ({ arrayListings }) => {
     useState<google.maps.DirectionsRenderer | null>(null);
 
   if (!context) return null;
-  const { radius, setRadius } = context;
+  const { radius, setRadius, isOn, setIsON } = context;
 
   const firstRenderRef = useRef(true);
 
@@ -73,6 +74,14 @@ const MapComponent = ({ arrayListings }) => {
       location.lng
     );
 
+    //Calculate distance
+    const distanceInKm = google.maps.geometry.spherical.computeDistanceBetween(
+      originLatLng,
+      destinationLatLng
+    );
+
+    setDistance(distanceInKm);
+
     directionsService.route(
       {
         origin: originLatLng,
@@ -93,7 +102,7 @@ const MapComponent = ({ arrayListings }) => {
     <>
       <LoadScript
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API}
-        libraries={["geometry"]}
+        libraries={["geometry", "places", "streetView"]}
       >
         {currentLocation ? (
           <GoogleMap
@@ -112,8 +121,9 @@ const MapComponent = ({ arrayListings }) => {
                 center={currentLocation}
                 radius={parseInt(radius, 10) * 1000}
                 options={{
-                  fillColor: firstRenderRef.current ? "transparent" : "#30cff2",
-                  strokeWeight: firstRenderRef.current ? "0" : "0",
+                  fillColor:
+                    firstRenderRef.current || !isOn ? "transparent" : "#30cff2",
+                  strokeWeight: firstRenderRef.current || !isOn ? "0" : "0",
                   fillOpacity: 0.3,
                 }}
                 onLoad={() => {
@@ -130,8 +140,22 @@ const MapComponent = ({ arrayListings }) => {
                 key={index}
                 {...listing}
                 handleMarkerClick={handleMarkerClick}
+                setClickedLocation={setClickedLocation}
               ></BoardingHouseMapView>
             ))}
+
+            {/* Display computed distance and panorama */}
+            {clickedLocation && (
+              <div className="absolute bottom-4 left-4 bg-white p-4 shadow-md rounded-md">
+                <p>
+                  Distance to clicked location: {(distance / 1000).toFixed(2)}{" "}
+                  km
+                </p>
+              </div>
+            )}
+
+            {/* Display footer distance */}
+            <ShowMapFooter footerType={2}></ShowMapFooter>
           </GoogleMap>
         ) : (
           <div className="flex justify-center items-center">
@@ -143,14 +167,6 @@ const MapComponent = ({ arrayListings }) => {
           </div>
         )}
       </LoadScript>
-      <ShowMapFooter footerType={2}></ShowMapFooter>
-
-      {/* Display computed distance */}
-      {distance !== null && clickedLocation && (
-        <div className="absolute bottom-4 left-4 bg-white p-4 shadow-md rounded-md">
-          <p>Distance to clicked location: {(distance / 1000).toFixed(2)} km</p>
-        </div>
-      )}
     </>
   );
 };

@@ -1,9 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-const ToggleButton = () => {
-  const [isOn, setIsOn] = useState(false);
-
+const ToggleButton = ({ isOn, setIsOn }) => {
   const toggleHandler = () => {
     setIsOn((prevState) => !prevState);
   };

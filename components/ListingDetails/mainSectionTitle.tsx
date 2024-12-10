@@ -10,7 +10,7 @@ const MainSectionTitle = ({
   hostImage,
 }) => {
   return (
-    <div className="mt-8 py-4">
+    <div className="mt-8">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold mb-1">{title}</h1>

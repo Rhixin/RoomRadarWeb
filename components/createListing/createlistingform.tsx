@@ -1,368 +1,508 @@
 "use client";
 import "./createlisting.css";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import StepIndicator from "../registration/stepindicator";
 import { IoMdArrowBack } from "react-icons/io";
 import CreateListing from "@/app/(auth)/listings/create/page";
 import ToggleButton from "../navbar/togglebutton";
 import PhotoUploader from "./uploadphoto";
+import { NavbarContext } from "../providers/navbarprovider";
+import { IoClose } from "react-icons/io5";
 
-const CreateListingForm = ({}) => {
+const CreateListingForm = ({ showModal, setShowModal }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const stepsSize = 4;
 
+  //NAVBAR CONETEXT NEEDED
+  const context = useContext(NavbarContext);
+  if (!context) return null;
+  const { isOn, setIsOn } = context;
+
+  //DATA TO BE POSTED
+  const [inputData, setInputData] = useState({
+    id: 0,
+    propertyName: "",
+    street: "",
+    barangay: "",
+    municipality: "",
+    province: "",
+    country: "",
+    postalCode: "",
+    latitude: 0,
+    longitude: 0,
+    propertyType: "",
+    rulesArray: [null],
+    numOfBeds: 0,
+    numOfBedrooms: 0,
+    numOfBathrooms: 0,
+    monthlyRate: 0,
+    landLordId: 0,
+    description: "",
+  });
+  const [isAlllowPets, setIsAlllowPets] = useState(false);
+
+  const [checkedAmenities, setCheckedAmenities] = useState({
+    wifi: false,
+    kitchen: false,
+    washer: false,
+    parking: false,
+    ac: false,
+    refrigerator: false,
+  });
+
+  const [checkedAdditionalFees, setCheckedAdditionalFees] = useState({
+    wifi: false,
+    maintenance: false,
+    water: false,
+    electricity: false,
+  });
+
+  const handleChangeAmenities = (e) => {
+    const { name, checked } = e.target;
+    setCheckedAmenities((prev) => ({ ...prev, [name]: checked }));
+  };
+
+  const handleChangeAdditionalFees = (e) => {
+    const { name, checked } = e.target;
+    setCheckedAdditionalFees((prev) => ({ ...prev, [name]: checked }));
+  };
+
+  // Handle form input changes
+  const handleChangeInputs = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   return (
-    <div className="form-container">
-      <div className="flex">
-        <h3 className="flex-1 justify-center text-center">Create Listing</h3>
-      </div>
+    <div
+      className={`modal-container transition-all duration-300 ease-in-out transform ${
+        showModal
+          ? "visible opacity-100 scale-100"
+          : "invisible opacity-0 scale-100"
+      }`}
+    >
+      <div className="form-container">
+        <div className="absolute top-6 right-6 ">
+          <IoClose
+            className="text-2xl cursor-pointer hover:scale-125 transition text-tertiary"
+            onClick={() => {
+              setShowModal(false);
+            }}
+          />
+        </div>
+        <div>
+          <div className="flex">
+            <h3 className="flex-1 justify-center text-center">
+              Create Listing
+            </h3>
+          </div>
 
-      <StepIndicator
-        currentStep={currentStep}
-        setCurrentStep={setCurrentStep}
-        totalSteps={stepsSize}
-      />
+          <StepIndicator
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            totalSteps={stepsSize}
+          />
+        </div>
 
-      <div className="steps-container">
-        <div className={`step-content ${currentStep === 1 ? "active" : ""}`}>
-          <div className="form-group">
-            <div>
-              <h3 className="font-bold flex-1 pt-5 mb-2">Listing Details</h3>
-              <label htmlFor="name" className="label">
-                Property Name
+        <div className="steps-container overflow-y-auto h-[67%] px-1 overflow-x-hidden">
+          <div className={`step-content ${currentStep === 1 ? "active" : ""}`}>
+            <div className="form-group">
+              <div>
+                <h3 className="font-bold flex-1 pt-5 mb-2">Listing Details</h3>
+                <label htmlFor="propertyName" className="label">
+                  Property Name
+                </label>
+                <input
+                  type="text"
+                  name="propertyName"
+                  placeholder="Enter Property Name"
+                  className="input"
+                />
+                <div className="form-group">
+                  <label htmlFor="propertyType" className="label">
+                    Property Type
+                  </label>
+                </div>
+                <select
+                  name="propertyType"
+                  className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm mb-5"
+                >
+                  <option value="">Select Property Type</option>
+                  <option value="apartment">Apartment</option>
+                  <option value="house">House</option>
+                  <option value="condo">Condominium</option>
+                  <option value="townhouse">Townhouse</option>
+                </select>
+              </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="address" className="label">
+                Address
               </label>
-              <input
-                type="text"
-                id="property-name"
-                placeholder="Enter Property Name"
-                className="input"
-              />
-              <div className="form-group">
-                <label htmlFor="property-type" className="label">
-                  Property Type
+            </div>
+
+            <div className="form-group items-center">
+              <div>
+                <label htmlFor="street" className="text-[.7rem] text-gray-500">
+                  Street
+                </label>
+                <input
+                  type="text"
+                  name="street"
+                  placeholder="Street"
+                  className="input"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="barangay"
+                  className="text-[.7rem] text-gray-500"
+                >
+                  Barangay
+                </label>
+                <input
+                  type="text"
+                  name="barangay"
+                  placeholder="Barangay"
+                  className="input"
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <div>
+                <label
+                  htmlFor="municipality"
+                  className="text-[.7rem] text-gray-500"
+                >
+                  Municipality
+                </label>
+                <input
+                  type="text"
+                  name="municipality"
+                  placeholder="Municipality"
+                  className="input"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="province"
+                  className="text-[.7rem] text-gray-500"
+                >
+                  Province
+                </label>
+                <input
+                  type="text"
+                  name="province"
+                  placeholder="Province"
+                  className="input"
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <div>
+                <label htmlFor="country" className="text-[.7rem] text-gray-500">
+                  Country
+                </label>
+                <input
+                  type="text"
+                  name="country"
+                  placeholder="Country"
+                  className="input"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="postalCode"
+                  className="text-[.7rem] text-gray-500"
+                >
+                  Postal Code
+                </label>
+                <input
+                  type="text"
+                  placeholder="Postal Code"
+                  className="input"
+                  name="postalCode"
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <div>
+                <label htmlFor="numOfBedrooms" className="label">
+                  Room
+                </label>
+                <input
+                  type="number"
+                  name="numOfBedrooms"
+                  placeholder="Number of Rooms"
+                  className="input"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="numOfBeds" className="label">
+                  Bed
+                </label>
+                <input
+                  type="number"
+                  name="numOfBeds"
+                  placeholder="Number of Beds"
+                  className="input"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="numOfBathrooms" className="label">
+                  Bathroom
+                </label>
+
+                <input
+                  type="number"
+                  name="numOfBathrooms"
+                  placeholder="Number of Bathrooms"
+                  className="input"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="amenities" className="label">
+                Amenities
+              </label>
+            </div>
+
+            <div className="form-group items-center">
+              <div className="flex">
+                <input
+                  type="checkbox"
+                  name="wifi"
+                  className="checkbox mr-10 "
+                  onChange={handleChangeAmenities}
+                />
+                <label htmlFor="wifi" className="checkbox-label">
+                  Wi-Fi
                 </label>
               </div>
-              <select
-                id="property-type"
-                name="property-type"
-                className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm mb-5"
-              >
-                <option value="">Select Property Type</option>
-                <option value="apartment">Apartment</option>
-                <option value="house">House</option>
-                <option value="condo">Condominium</option>
-                <option value="townhouse">Townhouse</option>
-              </select>
+
+              <div className="flex">
+                <input
+                  type="checkbox"
+                  name="kitchen"
+                  className="checkbox mr-10"
+                  onChange={handleChangeAmenities}
+                />
+                <label htmlFor="kitchen" className="checkbox-label">
+                  Kitchen
+                </label>
+              </div>
+
+              <div className="flex">
+                <input
+                  type="checkbox"
+                  name="washer"
+                  className="checkbox mr-10"
+                  onChange={handleChangeAmenities}
+                />
+                <label htmlFor="washer" className="checkbox-label">
+                  Washer
+                </label>
+              </div>
+            </div>
+
+            <div className="form-group items-center">
+              <div className="flex">
+                <input
+                  type="checkbox"
+                  name="parking"
+                  className="checkbox mr-10"
+                  onChange={handleChangeAmenities}
+                />
+                <label htmlFor="parking" className="checkbox-label">
+                  Parking
+                </label>
+              </div>
+
+              <div className="flex">
+                <input
+                  type="checkbox"
+                  name="ac"
+                  className="checkbox mr-10"
+                  onChange={handleChangeAmenities}
+                />
+                <label htmlFor="ac" className="checkbox-label">
+                  A/C
+                </label>
+              </div>
+
+              <div className="flex">
+                <input
+                  type="checkbox"
+                  name="refrigerator"
+                  className="checkbox mr-10"
+                  onChange={handleChangeAmenities}
+                />
+                <label htmlFor="refrigerator" className="checkbox-label">
+                  Refrigerator
+                </label>
+              </div>
+            </div>
+
+            <div className="form-group items-start justify-start mt-4">
+              <label htmlFor="pets" className="label ">
+                Allow pets
+              </label>
+              <ToggleButton
+                isOn={isAlllowPets}
+                setIsOn={setIsAlllowPets}
+              ></ToggleButton>
             </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="address" className="label">
-              {" "}
-              Address{" "}
-            </label>
+
+          {/* Attach Photos Step */}
+          <div className={`step-content ${currentStep === 2 ? "active" : ""}`}>
+            <div className="pt-5">
+              <label htmlFor="buildingpermit" className="font-bold">
+                Attach Photos
+              </label>
+            </div>
+            <div className="mt-5">
+              <PhotoUploader></PhotoUploader>
+
+              <label htmlFor="buildingpermit" className="label mt-5">
+                {" "}
+                Uploaded{" "}
+              </label>
+            </div>
           </div>
 
-          <div className="form-group items-center">
-            <div>
-              <input
-                type="state"
-                id="state"
-                placeholder="State / Province"
+          {/* Create Description*/}
+          <div className={`step-content ${currentStep === 3 ? "active" : ""}`}>
+            <div className="pt-5">
+              <label htmlFor="description" className="font-bold">
+                Create Description
+              </label>
+            </div>
+            <div className="relative mt-3">
+              <textarea
+                name="description"
                 className="input"
-              />
-            </div>
+                placeholder="Enter description"
+              ></textarea>
 
-            <div>
               <input
-                type="city"
-                id="city"
-                placeholder="City / Municipality"
                 className="input"
+                placeholder="Special Rules / Notes"
+                name="rulesArray"
               />
             </div>
           </div>
 
-          <div className="form-group">
-            <div>
-              <input
-                type="barangay"
-                id="barangay"
-                placeholder="Barangay"
-                className="input"
-              />
-            </div>
-
-            <div>
-              <input
-                type="street"
-                id="street"
-                placeholder="Street"
-                className="input"
-              />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <div>
-              <label htmlFor="rab" className="label">
-                Room and Beds
-              </label>
-              <input
-                type="number"
-                id="rab"
-                placeholder="Number of Beds"
-                className="input"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="bathrooms" className="label">
-                Bathrooms
-              </label>
-
-              <input
-                type="number"
-                id="bathrooms"
-                placeholder="Number of Bathrooms"
-                className="input"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="amenities" className="label">
-              Amenities
-            </label>
-          </div>
-
-          <div className="form-group items-center">
-            <div className="flex">
-              <input
-                type="checkbox"
-                id="wifi"
-                name="wifi"
-                className="checkbox mr-10"
-              />
-              <label htmlFor="wifi" className="checkbox-label">
-                Wi-Fi
-              </label>
-            </div>
-
-            <div className="flex">
-              <input
-                type="checkbox"
-                id="kitchen"
-                name="kitchen"
-                className="checkbox mr-10"
-              />
-              <label htmlFor="kitchen" className="checkbox-label">
-                Kitchen
-              </label>
-            </div>
-
-            <div className="flex">
-              <input
-                type="checkbox"
-                id="washer"
-                name="washer"
-                className="checkbox mr-10"
-              />
-              <label htmlFor="washer" className="checkbox-label">
-                Washer
-              </label>
-            </div>
-          </div>
-
-          <div className="form-group items-center">
-            <div className="flex">
-              <input
-                type="checkbox"
-                id="parking"
-                name="parking"
-                className="checkbox mr-10"
-              />
-              <label htmlFor="parking" className="checkbox-label">
-                Parking
-              </label>
-            </div>
-
-            <div className="flex">
-              <input
-                type="checkbox"
-                id="ac"
-                name="ac"
-                className="checkbox mr-10"
-              />
-              <label htmlFor="ac" className="checkbox-label">
-                A/C
-              </label>
-            </div>
-
-            <div className="flex">
-              <input
-                type="checkbox"
-                id="refrigerator"
-                name="refrigerator"
-                className="checkbox mr-10"
-              />
-              <label htmlFor="refrigerator" className="checkbox-label">
-                Refrigerator
-              </label>
-            </div>
-          </div>
-
-          <div className="form-group items-center">
-            <label htmlFor="others" className="label">
-              Others
-            </label>
-          </div>
-
-          <div className="form-group items-center">
-            <label htmlFor="pets" className="label ml-5">
-              Allow pets
-            </label>
-            <ToggleButton></ToggleButton>
-          </div>
-        </div>
-
-        {/* Attach Photos Step */}
-        <div className={`step-content ${currentStep === 2 ? "active" : ""}`}>
-          <div className="pt-5">
-            <label htmlFor="buildingpermit" className="font-bold">
-              Attach Photos
-            </label>
-          </div>
-          <div className="mt-5">
-            <PhotoUploader></PhotoUploader>
-
-            <label htmlFor="buildingpermit" className="label mt-5">
-              {" "}
-              Uploaded{" "}
-            </label>
-          </div>
-        </div>
-
-        {/* Create Description*/}
-        <div className={`step-content ${currentStep === 3 ? "active" : ""}`}>
-          <div className="pt-5">
-            <label htmlFor="samplepicture" className="font-bold">
-              Create Description
-            </label>
-          </div>
-          <div className="relative mt-3">
-            <textarea
-              id="description"
-              name="description"
-              className="input"
-              placeholder="Enter description"
-            ></textarea>
-
-            <input
-              id="notes"
-              className="input"
-              placeholder="Special Rules / Notes"
-            />
-          </div>
-        </div>
-
-        {/* Pricing */}
-        <div
-          className={`step-content ${
-            currentStep === stepsSize ? "active" : ""
-          }`}
-        >
-          <div className="pt-5">
-            <label htmlFor="pricing" className="font-bold mt-3">
-              Pricing
-            </label>
-          </div>
-
-          <label htmlFor="monthy-rate" className="label mt-2">
-            Monthly Rate
-          </label>
-
-          <div className="relative w-full mb-6">
-            <input
-              type="number"
-              id="monthly-rate"
-              name="monthly-rate"
-              className="bg-gray-200 border-none my-2 py-2.5 px-3.5 pl-7 mr-7 text-sm rounded-lg w-full focus:outline-none"
-              placeholder="Enter monthly rate"
-            />
-            <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-lg">
-              ₱
-            </span>
-            <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-lg">
-              /month
-            </span>
-          </div>
-
-          <label htmlFor="add-fees" className="label">
-            Additional Fees
-          </label>
-
-          <div className="flex space-x-6">
-            <div className="flex items-center ">
-              <input
-                type="checkbox"
-                id="wifi"
-                name="wifi"
-                className="mr-3 leading-tight"
-              />
-              <label htmlFor="wifi" className="mr-8">
-                Wifi
-              </label>
-
-              <input
-                type="checkbox"
-                id="maintenance"
-                name="maintenance"
-                className="mr-3 leading-tight"
-              />
-
-              <label htmlFor="maintenance" className="mr-8">
-                Maintenance
-              </label>
-
-              <input
-                type="checkbox"
-                id="water"
-                name="water"
-                className="mr-3 leading-tight"
-              />
-              <label htmlFor="water" className="mr-8">
-                Water
-              </label>
-
-              <input
-                type="checkbox"
-                id="electricity"
-                name="electricity"
-                className="mr-3 leading-tight"
-              />
-              <label htmlFor="electricity" className="mr-8">
-                Electricity
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Navigation Buttons */}
-      <div className="flex justify-between mt-4">
-        {currentStep === stepsSize && (
-          <button className="btn flex-1 bg-green-500">Create Listing</button>
-        )}
-
-        {currentStep !== stepsSize && (
-          <button
-            className="btn next mb-10"
-            onClick={() => setCurrentStep(currentStep + 1)}
+          {/* Pricing */}
+          <div
+            className={`step-content ${
+              currentStep === stepsSize ? "active" : ""
+            }`}
           >
-            Continue
-          </button>
-        )}
+            <div className="pt-5">
+              <label htmlFor="pricing" className="font-bold mt-3">
+                Pricing
+              </label>
+            </div>
+
+            <label htmlFor="monthyRate" className="label mt-2">
+              Monthly Rate
+            </label>
+
+            <div className="relative w-full mb-6">
+              <input
+                type="number"
+                name="monthyRate"
+                className="bg-gray-200 border-none my-2 py-2.5 px-3.5 pl-7 mr-7 text-sm rounded-lg w-full focus:outline-none"
+                placeholder="Enter monthly rate"
+              />
+              <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-lg">
+                ₱
+              </span>
+              <span className="absolute right-12 top-1/2 transform -translate-y-1/2 text-lg">
+                /month
+              </span>
+            </div>
+
+            <label htmlFor="additionalFeesArray" className="label">
+              Additional Fees
+            </label>
+
+            <div className="flex space-x-6">
+              <div className="flex items-center ">
+                <input
+                  type="checkbox"
+                  name="wifi"
+                  className="mr-3 leading-tight"
+                  onChange={handleChangeAdditionalFees}
+                />
+                <label htmlFor="wifi" className="mr-8">
+                  Wifi
+                </label>
+
+                <input
+                  type="checkbox"
+                  name="maintenance"
+                  className="mr-3 leading-tight"
+                  onChange={handleChangeAdditionalFees}
+                />
+
+                <label htmlFor="maintenance" className="mr-8">
+                  Maintenance
+                </label>
+
+                <input
+                  type="checkbox"
+                  name="water"
+                  className="mr-3 leading-tight"
+                  onChange={handleChangeAdditionalFees}
+                />
+                <label htmlFor="water" className="mr-8">
+                  Water
+                </label>
+
+                <input
+                  type="checkbox"
+                  name="electricity"
+                  className="mr-3 leading-tight"
+                  onChange={handleChangeAdditionalFees}
+                />
+                <label htmlFor="electricity" className="mr-8">
+                  Electricity
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Buttons */}
+        <div className="flex justify-between mt-4">
+          {currentStep === stepsSize && (
+            <button className="btn flex-1 bg-green-500">Create Listing</button>
+          )}
+
+          {currentStep !== stepsSize && (
+            <button
+              className="btn next mb-10"
+              onClick={() => setCurrentStep(currentStep + 1)}
+            >
+              Continue
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

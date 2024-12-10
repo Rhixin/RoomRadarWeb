@@ -28,7 +28,8 @@ export default function Navbar({ navbarType: initialNavbarType }) {
 
   if (!context) return null;
 
-  const { isMenuOpen, setIsMenuOpen, radius, setRadius } = context;
+  const { isMenuOpen, setIsMenuOpen, radius, setRadius, isOn, setIsOn } =
+    context;
 
   return (
     <nav className="bg-white sticky top-0 z-50">
@@ -54,7 +55,7 @@ export default function Navbar({ navbarType: initialNavbarType }) {
             <div className="sticky w-[100%] py-2 pr-8 pl-2">
               <input
                 type="text"
-                placeholder="Search conversation..."
+                placeholder="Search Boarding House..."
                 className="w-full py-3 pl-12 pr-4 text-sm text-gray-800 bg-gray-100 rounded-full shadow focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition duration-300"
               />
               <svg
@@ -271,7 +272,7 @@ export default function Navbar({ navbarType: initialNavbarType }) {
 
               <div className="w-[30%] h-full flex items-center border-l px-2 justify-around">
                 <span className="text-sm whitespace-nowrap">Enable Nearby</span>
-                <ToggleButton></ToggleButton>
+                <ToggleButton isOn={isOn} setIsOn={setIsOn}></ToggleButton>
               </div>
             </div>
           </div>

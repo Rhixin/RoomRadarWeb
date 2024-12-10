@@ -8,6 +8,8 @@ import MainSectionTitle from "@/components/listingdetails/mainsectiontitle";
 import AboutPlace from "@/components/listingdetails/aboutplace";
 import PlaceAmenities from "@/components/listingdetails/placeamenities";
 import StreetViewPanorama from "@/components/panorama/streetviewpanorama";
+import LandlordDetails from "@/components/listingdetails/landlorddetails";
+import LocationPreview from "@/components/listingdetails/locationpreview";
 
 const ListingDetails = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -31,10 +33,11 @@ const ListingDetails = () => {
       <div className="py-8">
         <div className="max-w-[2520px] mx-auto px-4 sm:px-24">
           {/* Header Section */}
+
           <div className="flex flex-col gap-6">
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-2xl font-bold mb-2">Rizwill Apartelle</h1>
+                <h1 className="text-4xl font-bold mb-2">Rizwill Apartelle</h1>
                 <div className="flex items-center gap-4 text-sm">
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4" />
@@ -112,8 +115,10 @@ const ListingDetails = () => {
             </div>
           </div>
 
+          <div className="mt-24"></div>
+
           <MainSectionTitle
-            title="Room in Cebu City, Philippines"
+            title="Cebu City, Philippines"
             beds={2}
             bathrooms={2}
             hostName="Justin Barro"
@@ -122,8 +127,13 @@ const ListingDetails = () => {
             hostImage="/images/test-justin.jpg"
           />
 
+          <LandlordDetails></LandlordDetails>
+
           <AboutPlace />
+
           <PlaceAmenities />
+
+          <LocationPreview></LocationPreview>
           {/* <iframe
             width="600"
             height="450"
@@ -134,9 +144,9 @@ const ListingDetails = () => {
             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8
     &q=Space+Needle,Seattle+WA"
             title="Embedded Google Map"
-          ></iframe> */}
+          ></iframe>
 
-          <StreetViewPanorama lat={10.293647} lng={123.867631} />
+          <StreetViewPanorama lat={10.293647} lng={123.867631} /> */}
         </div>
       </div>
     </>

@@ -201,165 +201,166 @@ const ListingDetails = () => {
         
 
 
-        <div className="mt-16 flex flex-row justify-between">
+        <div className="mt-28 flex flex-row justify-between">
             <div>
-            <h1 className="text-[25px] font-bold">
-              {listing.propertyType + " in " + listing.barangay + ", " + listing.municipality}
-            </h1>
-
+              <h1 className="text-[25px] font-bold">
+                {listing.propertyType + " in " + listing.barangay + ", " + listing.municipality}
+              </h1>
             <section className="mt-5">
-        <div className="mr-10">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-              <img
-                src="/images/landlord_placeholder.jpg"
-                alt="Landlord"
-                className="w-16 h-16 rounded-full object-cover"
-              />
-                <div>
-                  <h3 className="text-xl font-semibold">Aling Merna</h3>
-                  <p className="text-gray-600">Landlord</p>
+              <div className="mr-10">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src="/images/landlord_placeholder.jpg"
+                      alt="Landlord"
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                      <div>
+                        <h3 className="text-xl font-semibold">Aling Merna</h3>
+                        <p className="text-gray-600">Landlord</p>
+                      </div>
+                  </div>
+                  <div className="flex space-x-4">
+                    <RiMessage2Fill className="text-2xl text-tertiary cursor-pointer hover:scale-110 transition" />
+                    <IoCallSharp className="text-2xl text-tertiary cursor-pointer hover:scale-110 transition" />
+                  </div>
                 </div>
-            </div>
-            <div className="flex space-x-4">
-              <RiMessage2Fill className="text-2xl text-tertiary cursor-pointer hover:scale-110 transition" />
-              <IoCallSharp className="text-2xl text-tertiary cursor-pointer hover:scale-110 transition" />
-            </div>
-          </div>
-          <hr className="mt-5"></hr>
-          <h1 className="text-m font-bold mt-3">House Rules</h1>
-            {listing.rulesArray.map((rule, index) => (
-              <div key={index} className="flex flex-row my-4 gap-2">
-                <span className="font-semibold text-primary">{index + 1}.</span>
-                <span>{rule}</span>
+                <hr className="mt-5"></hr>
+                <h1 className="text-m font-bold mt-3">House Rules</h1>
+                  {listing.rulesArray.map((rule, index) => (
+                    <div key={index} className="flex flex-row my-4 gap-2">
+                      <span className="font-semibold text-primary">{index + 1}.</span>
+                      <span>{rule}</span>
+                    </div>
+                  ))}
+
+                <hr className="mt-5"></hr>
+
+                {/* description */}
+                <div className="mt-5">
+                  <p className="w-full">
+                    {listing.description
+                      .split(' ') 
+                      .slice(0, 35) 
+                      .join(' ') 
+                      + (listing.description.split(' ').length > 20 ? '...' : '')} 
+                  </p>
+                  ...
+                  <br></br>
+                  {listing.description.split(" ").length > 35 && (
+                    <button
+                      onClick={toggleModal}
+                      className="mt-2 font-bold underline"
+                    >
+                      Show More >
+                    </button>
+                  )}
+                </div>
+
+                <hr className="mt-5"></hr>
+
+                {isModalOpen && (
+                  <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white p-6 rounded-lg w-1/2 max-w-lg relative">
+                      {/* Close Button (X) */}
+                      <button
+                        onClick={toggleModal}
+                        className="absolute top-2 right-2 text-2xl font-bold text-black hover:text-red-500"
+                      >
+                        x
+                      </button>
+
+                      <h2 className="text-2xl font-semibold mb-4">About this space</h2>
+                      <p className="text-justify">{listing.description}</p>
+                      </div>
+                  </div>
+                )}
+
+                {/* LOCATION */}
+                <div className="mt-12">
+                  <h2 className="text-xl sm:text-2xl font-semibold mb-4">
+                    Location
+                  </h2>
+                      <iframe
+                        width="600"
+                        height="450"
+                        style={{ border: 0 }}
+                        loading="lazy"
+                        allowFullScreen
+                        referrerPolicy="no-referrer-when-downgrade"
+                        src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8&q=${listing.latitude},${listing.longitude}`}
+                        title="Embedded Google Map"
+                      ></iframe>
+                </div>
+
+                
               </div>
-            ))}
-
-          <hr className="mt-5"></hr>
-
-          {/* description */}
-          <div className="mt-5">
-            <p className="w-full">
-              {listing.description
-                .split(' ') 
-                .slice(0, 35) 
-                .join(' ') 
-                + (listing.description.split(' ').length > 20 ? '...' : '')} 
-            </p>
-            ...
-            <br></br>
-            {listing.description.split(" ").length > 35 && (
-              <button
-                onClick={toggleModal}
-                className="mt-2 font-bold underline"
-              >
-                Show More >
-              </button>
-            )}
-          </div>
-
-          <hr className="mt-5"></hr>
-
-          {isModalOpen && (
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-              <div className="bg-white p-6 rounded-lg w-1/2 max-w-lg relative">
-                {/* Close Button (X) */}
-                <button
-                  onClick={toggleModal}
-                  className="absolute top-2 right-2 text-2xl font-bold text-black hover:text-red-500"
-                >
-                  x
-                </button>
-
-                <h2 className="text-2xl font-semibold mb-4">About this space</h2>
-                <p className="text-justify">{listing.description}</p>
-                </div>
-            </div>
-          )}
-
-          
-        </div>
-        </section>
+            </section>
         </div>
 
         <div className="border border-gray-300 rounded-[12px] p-6 w-full md:w-3/4 h-fit shadow-lg sticky top-40 bg-white h-full">
-        <div className="justify-between items-center">
-            <div>
-              <span className="text-4xl font-bold text-primary">
-              ₱ {listing.monthlyRate}
-              </span>
-              <span className="text-gray-600"> / month</span>
-            </div>
-            <div className="flex space-x-4 text-gray-600 text-sm">
-              <div className="flex items-center space-x-2">
-                <BsDoorOpenFill />
-                <span>{listing.numOfBedrooms} Rooms</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <FaBed />
-                <span>{listing.numOfBeds} Beds</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <FaShower />
-                <span>{listing.numOfBathrooms} Bathrooms</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-row mt-8">
-            {/* AMMENETIES */}
-            <div className="flex-1">
-              <h2 className="text-sm font-semibold mb-4">
-              What this place offers
-              </h2>
+          <div className="justify-between items-center">
               <div>
-                {listing.checkedAmenities.map((item) => (
-                  <div key={item} className="flex flex-row my-4 gap-2">
-                    {ammenitiesIcons[item].icon} {ammenitiesIcons[item].label}
-                  </div>
-                ))}
+                <span className="text-4xl font-bold text-primary">
+                ₱ {listing.monthlyRate}
+                </span>
+                <span className="text-gray-600"> / month</span>
               </div>
-
-              {listing.isAllowPets && (
-                <div className="flex flex-row my-4 gap-2">
-                  {ammenitiesIcons.pet.icon} {ammenitiesIcons.pet.label}
+              <div className="flex space-x-4 text-gray-600 text-sm">
+                <div className="flex items-center space-x-2">
+                  <BsDoorOpenFill />
+                  <span>{listing.numOfBedrooms} Rooms</span>
                 </div>
-              )}
+                <div className="flex items-center space-x-2">
+                  <FaBed />
+                  <span>{listing.numOfBeds} Beds</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <FaShower />
+                  <span>{listing.numOfBathrooms} Bathrooms</span>
+                </div>
+              </div>
             </div>
 
-            {/* ADDITIONAL COSTS */}
-            <div className="flex-1">
-              <h2 className="sm:text font-semibold mb-4">
-                Additional Fees
-              </h2>
-              <div>
-                {listing.checkedAdditionalFees.map((item) => (
-                  <div key={item} className="flex flex-row my-4 gap-2">
-                    {additionalFees[item].icon} {additionalFees[item].label}
+            <div className="flex flex-row mt-8">
+              {/* AMMENETIES */}
+              <div className="flex-1">
+                <h2 className="text-sm font-semibold mb-4">
+                What this place offers
+                </h2>
+                <div>
+                  {listing.checkedAmenities.map((item) => (
+                    <div key={item} className="flex flex-row my-4 gap-2">
+                      {ammenitiesIcons[item].icon} {ammenitiesIcons[item].label}
+                    </div>
+                  ))}
+                </div>
+
+                {listing.isAllowPets && (
+                  <div className="flex flex-row my-4 gap-2">
+                    {ammenitiesIcons.pet.icon} {ammenitiesIcons.pet.label}
                   </div>
-                ))}
+                )}
+              </div>
+
+              {/* ADDITIONAL COSTS */}
+              <div className="flex-1">
+                <h2 className="sm:text font-semibold mb-4">
+                  Additional Fees
+                </h2>
+                <div>
+                  {listing.checkedAdditionalFees.map((item) => (
+                    <div key={item} className="flex flex-row my-4 gap-2">
+                      {additionalFees[item].icon} {additionalFees[item].label}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
                    
-          {/* LOCATION */}
-          <div className="mt-12">
-            <h2 className="text-xl sm:text-2xl font-semibold mb-4">
-              Location
-            </h2>
-                <iframe
-                  width="600"
-                  height="450"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  allowFullScreen
-                  referrerPolicy="no-referrer-when-downgrade"
-                  src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8&q=${listing.latitude},${listing.longitude}`}
-                  title="Embedded Google Map"
-                ></iframe>
-          </div>
+          
 
           {/* PANORMA */}
           <div className="flex flex-col mt-24 mb-16">

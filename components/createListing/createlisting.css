@@ -101,11 +101,11 @@ body {
 
 .form-container {
   position: fixed; /* Changed from absolute to fixed for viewport-centered positioning */
-  top: 55%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%); /* This centers the modal */
   padding: 2rem 4rem;
-  height: 60%;
+  height: 90%;
   width: 50%;
   transition: all 0.6s ease-in-out;
   background: white;

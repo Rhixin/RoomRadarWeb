@@ -5,6 +5,8 @@ import BoardingHouseMapView, {
   LatLng,
 } from "@/components/boardinghousemapview/boardinghousemapview";
 import MapComponent from "@/components/map/mapcomponent";
+import ShowMapFooter from "@/components/showmapfooter/showmapfooter";
+import RoomRadarMap from "@/components/map/roomradarmap";
 
 const Map = () => {
   //Payload example
@@ -43,7 +45,8 @@ const Map = () => {
   return (
     <>
       <Navbar navbarType={1}></Navbar>
-      <MapComponent arrayListings={arrayListings}></MapComponent>
+      <RoomRadarMap arrayListings={arrayListings}></RoomRadarMap>
+      <ShowMapFooter footerType={2}></ShowMapFooter>
     </>
   );
 };

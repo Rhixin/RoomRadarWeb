@@ -16,6 +16,7 @@ import ToggleButton from "./togglebutton";
 import { CiSearch } from "react-icons/ci";
 import { NavbarContext } from "../providers/navbarprovider";
 import CreateListingForm from "../createListing/createlistingform";
+import MenuBar from "../menubar/menubar";
 
 export default function Navbar({ navbarType: initialNavbarType }) {
   /* 
@@ -28,8 +29,16 @@ export default function Navbar({ navbarType: initialNavbarType }) {
 
   if (!context) return null;
 
-  const { isMenuOpen, setIsMenuOpen, radius, setRadius, isOn, setIsOn } =
-    context;
+  const {
+    isMenuOpen,
+    setIsMenuOpen,
+    radius,
+    setRadius,
+    isOn,
+    setIsOn,
+    isVisible,
+    setIsVisible,
+  } = context;
 
   return (
     <nav className="bg-white sticky top-0 z-50">
@@ -84,7 +93,10 @@ export default function Navbar({ navbarType: initialNavbarType }) {
               </span>
             </span>
 
-            <button className="relative flex items-center gap-2 rounded-full border px-4 py-2 hover:shadow-md transition">
+            <button
+              className="relative flex items-center gap-2 rounded-full border px-4 py-2 hover:shadow-md transition"
+              onClick={() => setIsVisible(true)}
+            >
               <Menu className="h-4 w-4" />
 
               {/* Profile Circle */}
@@ -301,6 +313,8 @@ export default function Navbar({ navbarType: initialNavbarType }) {
           </div>
         </div>
       </div>
+
+      <MenuBar isVisible={isVisible} setIsVisible={setIsVisible}></MenuBar>
     </nav>
   );
 }

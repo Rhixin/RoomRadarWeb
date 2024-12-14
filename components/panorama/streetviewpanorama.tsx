@@ -21,7 +21,7 @@ const StreetViewPanorama = ({ lat, lng }) => {
     } else {
       console.error("Google Maps JavaScript API not loaded.");
     }
-  }, [lat, lng]); // Watch the lat/lng dependencies
+  }, [lat, lng]);
 
   return (
     <div

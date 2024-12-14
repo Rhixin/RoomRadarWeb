@@ -6,6 +6,7 @@ export const NavbarProvider = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [radius, setRadius] = useState(20);
   const [isOn, setIsOn] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <NavbarContext.Provider
@@ -16,6 +17,8 @@ export const NavbarProvider = ({ children }) => {
         setRadius,
         isOn,
         setIsOn,
+        isVisible,
+        setIsVisible,
       }}
     >
       {children}

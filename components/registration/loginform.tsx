@@ -28,8 +28,9 @@ const LoginForm = ({ toggleForm }) => {
     try {
       const response = await logInUser(formData);
 
-      if (response.isSuccess) {
+      if (response.success) {
         //Successful log in then redirect
+        //TODO: Handle session or token
         alert("Logged in successfully!");
         router.push("/home");
       } else {

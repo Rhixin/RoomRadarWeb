@@ -9,10 +9,18 @@ import ToggleButton from "../navbar/togglebutton";
 import PhotoUploader from "./uploadphoto";
 import { NavbarContext } from "../providers/navbarprovider";
 import { IoClose } from "react-icons/io5";
+import MapSolo from "../map/mapsolo";
+import { LatLng } from "../boardinghousemapview/boardinghousemapview";
+import CustomMap from "../map/custommap";
+import RegisterLocationMap from "../map/registerlocationmap";
+const containerStyle = {
+  width: "100%",
+  height: "20rem",
+};
 
 const CreateListingForm = ({ showModal, setShowModal }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const stepsSize = 4;
+  const stepsSize = 5;
 
   //NAVBAR CONETEXT NEEDED
   const context = useContext(NavbarContext);
@@ -20,8 +28,9 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
   const { isOn, setIsOn } = context;
 
   //DATA TO BE POSTED
+  const [listingLocation, setlistingLocation] = useState<LatLng | null>(null);
   const [inputData, setInputData] = useState({
-    id: 0,
+    //TODO: Landlord ID
     propertyName: "",
     street: "",
     barangay: "",
@@ -32,14 +41,16 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
     latitude: 0,
     longitude: 0,
     propertyType: "",
-    rulesArray: [null],
     numOfBeds: 0,
     numOfBedrooms: 0,
     numOfBathrooms: 0,
     monthlyRate: 0,
-    landLordId: 0,
+    landLordId: 7,
     description: "",
   });
+
+  const [rulesArray, setRulesArray] = useState<string[]>([]);
+
   const [isAlllowPets, setIsAlllowPets] = useState(false);
 
   const [checkedAmenities, setCheckedAmenities] = useState({
@@ -58,6 +69,7 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
     electricity: false,
   });
 
+  //HANDLERS FOR CHANGIN INPUTS
   const handleChangeAmenities = (e) => {
     const { name, checked } = e.target;
     setCheckedAmenities((prev) => ({ ...prev, [name]: checked }));
@@ -68,13 +80,68 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
     setCheckedAdditionalFees((prev) => ({ ...prev, [name]: checked }));
   };
 
+  const handleChangeRules = (e) => {
+    const value = e.target.value; // Get the input string
+    const rulesArray = value.split(",").map((rule) => rule.trim()); // Split and trim
+    setRulesArray(rulesArray); // Update state
+  };
+
   // Handle form input changes
   const handleChangeInputs = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
+
+    // Parse only for specific input names
+    const parsedValue = [
+      "numOfBeds",
+      "numOfBedrooms",
+      "numOfBathrooms",
+      "monthlyRate",
+    ].includes(name)
+      ? value === ""
+        ? ""
+        : parseInt(value, 10)
+      : value;
+
+    setInputData({
+      ...inputData,
+      [name]: parsedValue,
     });
+  };
+
+  const showTrialData = () => {
+    const activeAmenities = Object.keys(checkedAmenities).filter(
+      (key) => checkedAmenities[key]
+    );
+
+    const activeAdditionalFees = Object.keys(checkedAdditionalFees).filter(
+      (key) => checkedAdditionalFees[key]
+    );
+
+    const payload = {
+      id: inputData.id,
+      propertyName: inputData.propertyName,
+      street: inputData.street,
+      barangay: inputData.barangay,
+      municipality: inputData.municipality,
+      province: inputData.province,
+      country: inputData.country,
+      postalCode: inputData.postalCode,
+      latitude: listingLocation?.lat,
+      longitude: listingLocation?.lng,
+      propertyType: inputData.propertyType,
+      rulesArray: rulesArray,
+      numOfBeds: inputData.numOfBeds,
+      numOfBedrooms: inputData.numOfBedrooms,
+      numOfBathrooms: inputData.numOfBedrooms,
+      monthlyRate: inputData.monthlyRate,
+      landLordId: inputData.landLordId,
+      description: inputData.description,
+      amenitiesArray: activeAmenities,
+      allowPets: isAlllowPets,
+      additionalFeesArray: activeAdditionalFees,
+    };
+
+    console.log(payload);
   };
 
   return (
@@ -108,7 +175,7 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
           />
         </div>
 
-        <div className="steps-container overflow-y-auto h-[67%] px-1 overflow-x-hidden">
+        <div className="steps-container overflow-y-auto h-[80%] px-1 overflow-x-hidden">
           <div className={`step-content ${currentStep === 1 ? "active" : ""}`}>
             <div className="form-group">
               <div>
@@ -121,6 +188,8 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   name="propertyName"
                   placeholder="Enter Property Name"
                   className="input"
+                  value={inputData.propertyName}
+                  onChange={handleChangeInputs}
                 />
                 <div className="form-group">
                   <label htmlFor="propertyType" className="label">
@@ -130,8 +199,10 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                 <select
                   name="propertyType"
                   className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm mb-5"
+                  value={inputData.propertyType}
+                  onChange={handleChangeInputs}
                 >
-                  <option value="">Select Property Type</option>
+                  <option value="apartment">Select Property Type</option>
                   <option value="apartment">Apartment</option>
                   <option value="house">House</option>
                   <option value="condo">Condominium</option>
@@ -155,6 +226,8 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   name="street"
                   placeholder="Street"
                   className="input"
+                  value={inputData.street}
+                  onChange={handleChangeInputs}
                 />
               </div>
 
@@ -170,6 +243,8 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   name="barangay"
                   placeholder="Barangay"
                   className="input"
+                  value={inputData.barangay}
+                  onChange={handleChangeInputs}
                 />
               </div>
             </div>
@@ -187,6 +262,8 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   name="municipality"
                   placeholder="Municipality"
                   className="input"
+                  value={inputData.municipality}
+                  onChange={handleChangeInputs}
                 />
               </div>
 
@@ -202,6 +279,8 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   name="province"
                   placeholder="Province"
                   className="input"
+                  value={inputData.province}
+                  onChange={handleChangeInputs}
                 />
               </div>
             </div>
@@ -216,6 +295,8 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   name="country"
                   placeholder="Country"
                   className="input"
+                  value={inputData.country}
+                  onChange={handleChangeInputs}
                 />
               </div>
 
@@ -231,6 +312,8 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   placeholder="Postal Code"
                   className="input"
                   name="postalCode"
+                  value={inputData.postalCode}
+                  onChange={handleChangeInputs}
                 />
               </div>
             </div>
@@ -245,6 +328,8 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   name="numOfBedrooms"
                   placeholder="Number of Rooms"
                   className="input"
+                  value={inputData.numOfBedrooms}
+                  onChange={handleChangeInputs}
                 />
               </div>
 
@@ -257,6 +342,8 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   name="numOfBeds"
                   placeholder="Number of Beds"
                   className="input"
+                  value={inputData.numOfBeds}
+                  onChange={handleChangeInputs}
                 />
               </div>
 
@@ -270,6 +357,8 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   name="numOfBathrooms"
                   placeholder="Number of Bathrooms"
                   className="input"
+                  value={inputData.numOfBathrooms}
+                  onChange={handleChangeInputs}
                 />
               </div>
             </div>
@@ -376,11 +465,6 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
             </div>
             <div className="mt-5">
               <PhotoUploader></PhotoUploader>
-
-              <label htmlFor="buildingpermit" className="label mt-5">
-                {" "}
-                Uploaded{" "}
-              </label>
             </div>
           </div>
 
@@ -396,22 +480,22 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                 name="description"
                 className="input"
                 placeholder="Enter description"
+                value={inputData.description}
+                onChange={handleChangeInputs}
               ></textarea>
 
               <input
                 className="input"
                 placeholder="Special Rules / Notes"
                 name="rulesArray"
+                value={rulesArray.join(", ")}
+                onChange={handleChangeRules}
               />
             </div>
           </div>
 
           {/* Pricing */}
-          <div
-            className={`step-content ${
-              currentStep === stepsSize ? "active" : ""
-            }`}
-          >
+          <div className={`step-content ${currentStep === 4 ? "active" : ""}`}>
             <div className="pt-5">
               <label htmlFor="pricing" className="font-bold mt-3">
                 Pricing
@@ -425,9 +509,11 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
             <div className="relative w-full mb-6">
               <input
                 type="number"
-                name="monthyRate"
+                name="monthlyRate"
                 className="bg-gray-200 border-none my-2 py-2.5 px-3.5 pl-7 mr-7 text-sm rounded-lg w-full focus:outline-none"
-                placeholder="Enter monthly rate"
+                placeholder="Enter Rate"
+                value={inputData.monthlyRate}
+                onChange={handleChangeInputs}
               />
               <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-lg">
                 ₱
@@ -486,12 +572,25 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
               </div>
             </div>
           </div>
+
+          {/* Attach GeoPoint Step */}
+          <div
+            className={`step-content ${
+              currentStep === stepsSize ? "active" : ""
+            }`}
+          >
+            <RegisterLocationMap
+              setlistingLocation={setlistingLocation}
+            ></RegisterLocationMap>
+          </div>
         </div>
 
         {/* Navigation Buttons */}
         <div className="flex justify-between mt-4">
           {currentStep === stepsSize && (
-            <button className="btn flex-1 bg-green-500">Create Listing</button>
+            <button className="btn flex-1 bg-green-500" onClick={showTrialData}>
+              Create Listing
+            </button>
           )}
 
           {currentStep !== stepsSize && (

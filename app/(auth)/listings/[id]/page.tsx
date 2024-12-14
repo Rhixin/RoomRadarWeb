@@ -7,9 +7,11 @@ import PhotoModal from "@/components/photoModal/photoModal";
 import MainSectionTitle from "@/components/listingdetails/mainsectiontitle";
 import AboutPlace from "@/components/listingdetails/aboutplace";
 import PlaceAmenities from "@/components/listingdetails/placeamenities";
-import StreetViewPanorama from "@/components/panorama/streetviewpanorama";
 import LandlordDetails from "@/components/listingdetails/landlorddetails";
 import LocationPreview from "@/components/listingdetails/locationpreview";
+import { BsDoorOpenFill } from "react-icons/bs";
+import { FaBed } from "react-icons/fa";
+import { FaShower } from "react-icons/fa";
 
 const ListingDetails = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -20,15 +22,29 @@ const ListingDetails = () => {
     "/images/testing-1.avif",
     "/images/testing-1.avif",
   ];
+  const listing = {
+    id: 9,
+    propertyName: "Rizwill Apartelle",
+    street: "Tres De Abril",
+    barangay: "Labangon",
+    municipality: "Cebu",
+    province: "Cebu",
+    country: "Philippines",
+    postalCode: "6012",
+    latitude: 10.293638797224038,
+    longitude: 123.90174865722656,
+    propertyType: "Condomminum",
+    numOfBeds: 3,
+    numOfBedrooms: 5,
+    numOfBathrooms: 2,
+    monthlyRate: 0,
+    landLordId: 7,
+    description: "",
+  };
+
   return (
     <>
       <Navbar navbarType={2}></Navbar>
-
-      <script
-        src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8&callback=initialize`}
-        async
-        defer
-      ></script>
 
       <div className="py-8">
         <div className="max-w-[2520px] mx-auto px-4 sm:px-24">
@@ -37,15 +53,27 @@ const ListingDetails = () => {
           <div className="flex flex-col gap-6">
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-4xl font-bold mb-2">Rizwill Apartelle</h1>
-                <div className="flex items-center gap-4 text-sm">
+                <h1 className="text-4xl font-bold mb-2">
+                  {listing.propertyName}
+                </h1>
+                <div className="flex flex-row text-sm gap-8">
+                  <div className="flex items-center gap-1">
+                    <MapPin className="w-4 h-4" />
+                    <span>
+                      {listing.street +
+                        ", " +
+                        listing.barangay +
+                        ", " +
+                        listing.municipality +
+                        ", " +
+                        listing.province +
+                        ", " +
+                        listing.country}
+                    </span>
+                  </div>
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4" />
                     <span>4.9</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MapPin className="w-4 h-4" />
-                    <span>Makati, Metro Manila</span>
                   </div>
                 </div>
               </div>
@@ -115,21 +143,33 @@ const ListingDetails = () => {
             </div>
           </div>
 
-          <div className="mt-24"></div>
-
-          <MainSectionTitle
-            title="Cebu City, Philippines"
-            beds={2}
-            bathrooms={2}
-            hostName="Justin Barro"
-            hostType="RoomRadar"
-            hostingYears={10}
-            hostImage="/images/test-justin.jpg"
-          />
+          <div className="mt-28"></div>
 
           <LandlordDetails></LandlordDetails>
 
-          <AboutPlace />
+          <div className="mt-8">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-semibold mb-4">
+                About this place
+              </h2>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+              <div className="flex  gap-4 text-lg pt-4 flex-col text-tertiary ">
+                <span className="flex gap-2 items-center">
+                  <BsDoorOpenFill></BsDoorOpenFill>
+                  <h1>{listing.numOfBedrooms} Rooms</h1>
+                </span>
+                <span className="flex gap-2 items-center">
+                  <FaBed></FaBed>
+                  <h1>{listing.numOfBeds} Beds</h1>
+                </span>
+                <span className="flex gap-2 items-center">
+                  <FaShower></FaShower>
+                  <h1>{listing.numOfBathrooms} Bathrooms</h1>
+                </span>
+              </div>
+            </div>
+          </div>
 
           <PlaceAmenities />
 

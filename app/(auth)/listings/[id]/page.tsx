@@ -298,7 +298,7 @@ const ListingDetails = () => {
             </section>
         </div>
 
-        <div className="border border-gray-300 rounded-[12px] p-6 w-full md:w-3/4 h-fit shadow-lg sticky top-40 bg-white h-full">
+        <div className="border border-gray-300 rounded-[12px] p-6 w-full md:w-3/4 h-fit shadow-lg sticky top-60 bg-white h-full">
           <div className="justify-between items-center">
               <div>
                 <span className="text-4xl font-bold text-primary">

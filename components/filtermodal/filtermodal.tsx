@@ -1,9 +1,62 @@
 import React, { useState } from "react";
 import ToggleButton from "../navbar/togglebutton";
 
-const FilterModal = ({ isOpen, onClose }) => {
-  const [selectedFilteredPrice, setSelectedFilteredPrice] = useState(1);
+const FilterModal = ({
+  isOpen,
+  onClose,
+  priceRange,
+  setPriceRange,
+  amenities,
+  setAmenities,
+  additionalFees,
+  setAdditionalFees,
+  selectedFilters,
+  setSelectedFilters,
+  radius,
+  setRadius,
+  selectedType,
+  setSelectedType,
+  selectedSortBy,
+  setSelectedSortBy,
+  isOn,
+  setIsOn,
+  isAllowPets,
+  setIsAllowPets,
+}) => {
   if (!isOpen) return null;
+
+  // HANDLER FOR CHANGING INPUTS (Adding only checked checkboxes)
+  const handleChange = (type, value, checked) => {
+    if (checked) {
+      // Add to array if checked
+      if (type === "amenities") {
+        setAmenities((prev) => [...prev, value]);
+      } else if (type === "additionalFees") {
+        setAdditionalFees((prev) => [...prev, value]);
+      }
+    } else {
+      // Remove from array if unchecked
+      if (type === "amenities") {
+        setAmenities((prev) => prev.filter((item) => item !== value));
+      } else if (type === "additionalFees") {
+        setAdditionalFees((prev) => prev.filter((item) => item !== value));
+      }
+    }
+  };
+
+  function consoleFilter() {
+    const sendToServer = {
+      propertyType: selectedType,
+      radius: isOn ? radius : 0,
+      priceRange: priceRange,
+      amenities: amenities,
+      allowPets: isAllowPets,
+      additionalFees: additionalFees,
+      sortBy: selectedSortBy,
+    };
+
+    console.log(sendToServer);
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -27,35 +80,39 @@ const FilterModal = ({ isOpen, onClose }) => {
                 min="1"
                 max="100000"
                 step="1"
-                value={selectedFilteredPrice} // Fixed here (removed the extra closing brace)
+                value={priceRange} // Fixed here (removed the extra closing brace)
                 className="cursor-pointer flex-1"
-                onChange={(e) => setSelectedFilteredPrice(e.target.value)}
+                onChange={(e) => setPriceRange(e.target.value)}
               />
               <div className="flex flex-row gap-2 items-center">
                 <p>Php</p>
                 <input
                   type="number"
                   min="1"
-                  max="100"
+                  max="100000"
                   step="1"
-                  value={selectedFilteredPrice}
+                  value={priceRange}
                   className="w-24 border rounded-md text-center text-sm h-8"
                   onChange={(e) => {
                     const value = Math.min(Math.max(e.target.value, 1), 100000); // Ensure the value stays within range
-                    setSelectedFilteredPrice(value);
+                    setPriceRange(value);
                   }}
                 />
               </div>
             </div>
           </div>
           <div>
-            <p className="text-sm mt-8 mb-2">Ammenities:</p>
+            <p className="text-sm mt-8 mb-2">Amenities:</p>
             <div className="form-group items-center">
               <div className="flex">
                 <input
                   type="checkbox"
                   name="wifi"
-                  className="checkbox mr-10 "
+                  className="checkbox mr-10"
+                  checked={amenities.includes("wifi")}
+                  onChange={(e) =>
+                    handleChange("amenities", "wifi", e.target.checked)
+                  }
                 />
                 <label htmlFor="wifi" className="checkbox-label">
                   Wi-Fi
@@ -67,6 +124,10 @@ const FilterModal = ({ isOpen, onClose }) => {
                   type="checkbox"
                   name="kitchen"
                   className="checkbox mr-10"
+                  checked={amenities.includes("kitchen")}
+                  onChange={(e) =>
+                    handleChange("amenities", "kitchen", e.target.checked)
+                  }
                 />
                 <label htmlFor="kitchen" className="checkbox-label">
                   Kitchen
@@ -78,6 +139,10 @@ const FilterModal = ({ isOpen, onClose }) => {
                   type="checkbox"
                   name="washer"
                   className="checkbox mr-10"
+                  checked={amenities.includes("washer")}
+                  onChange={(e) =>
+                    handleChange("amenities", "washer", e.target.checked)
+                  }
                 />
                 <label htmlFor="washer" className="checkbox-label">
                   Washer
@@ -91,6 +156,10 @@ const FilterModal = ({ isOpen, onClose }) => {
                   type="checkbox"
                   name="parking"
                   className="checkbox mr-10"
+                  checked={amenities.includes("parking")}
+                  onChange={(e) =>
+                    handleChange("amenities", "parking", e.target.checked)
+                  }
                 />
                 <label htmlFor="parking" className="checkbox-label">
                   Parking
@@ -98,7 +167,15 @@ const FilterModal = ({ isOpen, onClose }) => {
               </div>
 
               <div className="flex">
-                <input type="checkbox" name="ac" className="checkbox mr-10" />
+                <input
+                  type="checkbox"
+                  name="ac"
+                  className="checkbox mr-10"
+                  checked={amenities.includes("ac")}
+                  onChange={(e) =>
+                    handleChange("amenities", "ac", e.target.checked)
+                  }
+                />
                 <label htmlFor="ac" className="checkbox-label">
                   A/C
                 </label>
@@ -109,6 +186,10 @@ const FilterModal = ({ isOpen, onClose }) => {
                   type="checkbox"
                   name="refrigerator"
                   className="checkbox mr-10"
+                  checked={amenities.includes("refrigerator")}
+                  onChange={(e) =>
+                    handleChange("amenities", "refrigerator", e.target.checked)
+                  }
                 />
                 <label htmlFor="refrigerator" className="checkbox-label">
                   Refrigerator
@@ -118,7 +199,10 @@ const FilterModal = ({ isOpen, onClose }) => {
 
             <div className="form-group justify-start mt-8 mb-4 flex flex-row items-center">
               <p className="text-sm ">Allow Pets</p>
-              <ToggleButton isOn={undefined} setIsOn={undefined}></ToggleButton>
+              <ToggleButton
+                isOn={isAllowPets}
+                setIsOn={setIsAllowPets}
+              ></ToggleButton>
             </div>
           </div>
           <div>
@@ -128,6 +212,10 @@ const FilterModal = ({ isOpen, onClose }) => {
                 type="checkbox"
                 name="wifi"
                 className="mr-3 leading-tight"
+                checked={additionalFees.includes("wifi")}
+                onChange={(e) =>
+                  handleChange("additionalFees", "wifi", e.target.checked)
+                }
               />
               <label htmlFor="wifi" className="mr-8">
                 Wifi
@@ -137,6 +225,14 @@ const FilterModal = ({ isOpen, onClose }) => {
                 type="checkbox"
                 name="maintenance"
                 className="mr-3 leading-tight"
+                checked={additionalFees.includes("maintenance")}
+                onChange={(e) =>
+                  handleChange(
+                    "additionalFees",
+                    "maintenance",
+                    e.target.checked
+                  )
+                }
               />
 
               <label htmlFor="maintenance" className="mr-8">
@@ -147,6 +243,10 @@ const FilterModal = ({ isOpen, onClose }) => {
                 type="checkbox"
                 name="water"
                 className="mr-3 leading-tight"
+                checked={additionalFees.includes("water")}
+                onChange={(e) =>
+                  handleChange("additionalFees", "water", e.target.checked)
+                }
               />
               <label htmlFor="water" className="mr-8">
                 Water
@@ -156,6 +256,14 @@ const FilterModal = ({ isOpen, onClose }) => {
                 type="checkbox"
                 name="electricity"
                 className="mr-3 leading-tight"
+                checked={additionalFees.includes("electricity")}
+                onChange={(e) =>
+                  handleChange(
+                    "additionalFees",
+                    "electricity",
+                    e.target.checked
+                  )
+                }
               />
               <label htmlFor="electricity" className="mr-8">
                 Electricity
@@ -171,7 +279,7 @@ const FilterModal = ({ isOpen, onClose }) => {
           </p>
           <button
             className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-tertiary"
-            onClick={onClose}
+            onClick={() => consoleFilter()}
           >
             Apply Filters
           </button>

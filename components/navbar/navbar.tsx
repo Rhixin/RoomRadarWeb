@@ -49,6 +49,18 @@ export default function Navbar({ navbarType: initialNavbarType }) {
     setSelectedType,
     selectedSortBy,
     setSelectedSortBy,
+    isAllowPets,
+    setIsAllowPets,
+    //group filter modal
+    priceRange,
+    setPriceRange,
+    amenities,
+    setAmenities,
+    additionalFees,
+    setAdditionalFees,
+    //Summary
+    selectedFilters,
+    setSelectedFilters,
   } = context;
 
   //Scrolling in property types
@@ -71,6 +83,24 @@ export default function Navbar({ navbarType: initialNavbarType }) {
       <FilterModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
+        priceRange={priceRange}
+        setPriceRange={setPriceRange}
+        amenities={amenities}
+        setAmenities={setAmenities}
+        additionalFees={additionalFees}
+        setAdditionalFees={setAdditionalFees}
+        selectedFilters={selectedFilters}
+        setSelectedFilters={setSelectedFilters}
+        radius={radius}
+        setRadius={setRadius}
+        selectedType={selectedType}
+        setSelectedType={setSelectedType}
+        selectedSortBy={selectedSortBy}
+        setSelectedSortBy={setSelectedSortBy}
+        isOn={isOn}
+        setIsOn={setIsOn}
+        isAllowPets={isAllowPets}
+        setIsAllowPets={setIsAllowPets}
       />
 
       <div className="max-w-[2520px] mx-auto px-4 sm:px-24 border-b border-faded">

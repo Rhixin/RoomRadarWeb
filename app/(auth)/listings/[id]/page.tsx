@@ -154,7 +154,7 @@ const ListingDetails = () => {
               </h2>
             </div>
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
-              <div className="flex  gap-4 text-lg pt-4 flex-col text-tertiary ">
+              <div className="flex  gap-4 text-lg pt-4 flex-col">
                 <span className="flex gap-2 items-center">
                   <BsDoorOpenFill></BsDoorOpenFill>
                   <h1>{listing.numOfBedrooms} Rooms</h1>

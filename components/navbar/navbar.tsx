@@ -1,7 +1,7 @@
 "use client";
 import "./navbar.css";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Globe, Menu, User, X } from "lucide-react";
@@ -17,6 +17,7 @@ import { CiSearch } from "react-icons/ci";
 import { NavbarContext } from "../providers/navbarprovider";
 import CreateListingForm from "../createListing/createlistingform";
 import MenuBar from "../menubar/menubar";
+import FilterModal from "../filtermodal/filtermodal";
 
 export default function Navbar({ navbarType: initialNavbarType }) {
   /* 
@@ -25,6 +26,11 @@ export default function Navbar({ navbarType: initialNavbarType }) {
   2 -> Upper Navbar only
   */
   const [navbarType, setNavbarType] = useState(initialNavbarType);
+
+  //filter modal
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
+  //navbar context values for global accessibility
   const context = useContext(NavbarContext);
 
   if (!context) return null;
@@ -32,16 +38,41 @@ export default function Navbar({ navbarType: initialNavbarType }) {
   const {
     isMenuOpen,
     setIsMenuOpen,
-    radius,
-    setRadius,
     isOn,
     setIsOn,
     isVisible,
     setIsVisible,
+    //FILTERS
+    radius,
+    setRadius,
+    selectedType,
+    setSelectedType,
+    selectedSortBy,
+    setSelectedSortBy,
   } = context;
+
+  //Scrolling in property types
+  const scrollContainerRef = useRef(null);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -100, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 100, behavior: "smooth" });
+    }
+  };
 
   return (
     <nav className="bg-white sticky top-0 z-50">
+      <FilterModal
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+      />
+
       <div className="max-w-[2520px] mx-auto px-4 sm:px-24 border-b border-faded">
         {/* Upper Navbar Section */}
         <div className="flex justify-between items-center h-16 sm:h-20">
@@ -141,115 +172,184 @@ export default function Navbar({ navbarType: initialNavbarType }) {
       >
         <div className="flex justify-between items-center h-16 sm:h-20">
           <div
-            className="flex flex-[40%] gap-12 group"
+            className="relative flex flex-[40%] group hide-scrollbar scroll-smooth"
             id="boarding-house-types"
           >
-            <button className="absolute left-2 top-1/2 -translate-y-1/2 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 hover:opacity-100 transition z-10 border-2">
+            {/* Left Scroll Button */}
+            <button
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 hover:opacity-100 transition z-10 border-2"
+              onClick={scrollLeft}
+            >
               <ChevronLeft className="w-6 h-6" />
             </button>
-            <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 hover:opacity-100 transition z-10 border-2">
+
+            {/* Scrollable Container */}
+            <div
+              ref={scrollContainerRef}
+              className="flex gap-12 overflow-x-auto scroll-smooth hide-scrollbar px-8"
+            >
+              <div
+                className={`bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer ${
+                  selectedType === "apartment" ? "scale-125" : ""
+                }`}
+                onClick={() =>
+                  setSelectedType((prevType: string) =>
+                    prevType === "apartment" ? null : "apartment"
+                  )
+                }
+              >
+                <FaHouseSignal className="type-icon" />
+                <p
+                  className={`${
+                    selectedType === "apartment"
+                      ? "selected-type"
+                      : "not-selected-type"
+                  }`}
+                >
+                  Apartment
+                </p>
+              </div>
+
+              <div
+                className={`bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer ${
+                  selectedType === "house" ? "scale-125" : ""
+                }`}
+                onClick={() =>
+                  setSelectedType((prevType: string) =>
+                    prevType === "house" ? null : "house"
+                  )
+                }
+              >
+                <BiBuildingHouse className="type-icon" />
+                <p
+                  className={`${
+                    selectedType === "house"
+                      ? "selected-type"
+                      : "not-selected-type"
+                  }`}
+                >
+                  House
+                </p>
+              </div>
+
+              <div
+                className={`bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer ${
+                  selectedType === "condominium" ? "scale-125" : ""
+                }`}
+                onClick={() =>
+                  setSelectedType((prevType: string) =>
+                    prevType === "condominium" ? null : "condominium"
+                  )
+                }
+              >
+                <FaHouseSignal className="type-icon" />
+                <p
+                  className={`${
+                    selectedType === "condominium"
+                      ? "selected-type"
+                      : "not-selected-type"
+                  }`}
+                >
+                  Condominium
+                </p>
+              </div>
+
+              <div
+                className={`bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer ${
+                  selectedType === "townhouse" ? "scale-125" : ""
+                }`}
+                onClick={() =>
+                  setSelectedType((prevType: string) =>
+                    prevType === "townhouse" ? null : "townhouse"
+                  )
+                }
+              >
+                <FaHouseSignal className="type-icon" />
+                <p
+                  className={`whitespace-nowrap ${
+                    selectedType === "townhouse"
+                      ? "selected-type"
+                      : "not-selected-type"
+                  }`}
+                >
+                  Town House
+                </p>
+              </div>
+
+              <div
+                className={`bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer ${
+                  selectedType === "sharedroom" ? "scale-125" : ""
+                }`}
+                onClick={() =>
+                  setSelectedType((prevType: string) =>
+                    prevType === "sharedroom" ? null : "sharedroom"
+                  )
+                }
+              >
+                <FaHouseSignal className="type-icon" />
+                <p
+                  className={`whitespace-nowrap ${
+                    selectedType === "sharedroom"
+                      ? "selected-type"
+                      : "not-selected-type"
+                  }`}
+                >
+                  Shared Room
+                </p>
+              </div>
+
+              <div
+                className={`bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer ${
+                  selectedType === "bedspace" ? "scale-125" : ""
+                }`}
+                onClick={() =>
+                  setSelectedType((prevType: string) =>
+                    prevType === "bedspace" ? null : "bedspace"
+                  )
+                }
+              >
+                <BiBuildingHouse className="type-icon" />
+                <p
+                  className={`whitespace-nowrap ${
+                    selectedType === "bedspace"
+                      ? "selected-type"
+                      : "not-selected-type"
+                  }`}
+                >
+                  Bed Space
+                </p>
+              </div>
+
+              <div
+                className={`bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer ${
+                  selectedType === "dormitory" ? "scale-125" : ""
+                }`}
+                onClick={() =>
+                  setSelectedType((prevType: string) =>
+                    prevType === "dormitory" ? null : "dormitory"
+                  )
+                }
+              >
+                <FaHouseSignal className="type-icon" />
+                <p
+                  className={`${
+                    selectedType === "dormitory"
+                      ? "selected-type"
+                      : "not-selected-type"
+                  }`}
+                >
+                  Dormitory
+                </p>
+              </div>
+            </div>
+
+            {/* Right Scroll Button */}
+            <button
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 hover:opacity-100 transition z-10 border-2"
+              onClick={scrollRight}
+            >
               <ChevronRight className="w-6 h-6" />
             </button>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Dormitory</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <BiBuildingHouse className="type-icon"></BiBuildingHouse>
-              <p>Condo</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Apartment</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Bed Space</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Dormitory</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <BiBuildingHouse className="type-icon"></BiBuildingHouse>
-              <p>Condo</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Apartment</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Bed Space</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Dormitory</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <BiBuildingHouse className="type-icon"></BiBuildingHouse>
-              <p>Condo</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Apartment</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <GiFamilyHouse className="type-icon"></GiFamilyHouse>
-              <p>Bed Space</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Dormitory</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <BiBuildingHouse className="type-icon"></BiBuildingHouse>
-              <p>Condo</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Apartment</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <GiFamilyHouse className="type-icon"></GiFamilyHouse>
-              <p>Bed Space</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Dormitory</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <BiBuildingHouse className="type-icon"></BiBuildingHouse>
-              <p>Condo</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <FaHouseSignal className="type-icon"></FaHouseSignal>
-              <p>Apartment</p>
-            </div>
-
-            <div className="bhouse-type hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <GiFamilyHouse className="type-icon"></GiFamilyHouse>
-              <p>Bed Space</p>
-            </div>
           </div>
 
           {/* Show Nearby within this km radius filter */}
@@ -290,7 +390,10 @@ export default function Navbar({ navbarType: initialNavbarType }) {
           </div>
 
           {/* Specfic Filters modal */}
-          <div className="flex-[5%] px-2 h-full flex items-center">
+          <div
+            className="flex-[5%] px-2 h-full flex items-center"
+            onClick={() => setIsFilterModalOpen(true)}
+          >
             <button className="relative flex items-center gap-2 rounded-xl border px-4 hover:shadow-md transition w-full h-[60%]">
               <VscSettings className="h-4 w-4" />
               <p className="text-sm">Filters</p>
@@ -301,14 +404,16 @@ export default function Navbar({ navbarType: initialNavbarType }) {
           <div className="flex-[10%] pl-2 h-full flex items-center">
             <select
               className="relative flex items-center gap-2 rounded-xl border px-4 hover:shadow-md transition text-sm w-full h-[60%]"
-              defaultValue=""
+              value={selectedSortBy}
+              onChange={(e) => setSelectedSortBy(e.target.value)}
             >
               <option value="" disabled>
                 Sort By
               </option>
+              <option value="none">None</option>
               <option value="price">Price</option>
               <option value="rating">Rating</option>
-              <option value="date">Date</option>
+              <option value="distance">Distance</option>
             </select>
           </div>
         </div>

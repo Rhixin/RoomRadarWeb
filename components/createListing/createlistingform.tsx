@@ -118,7 +118,6 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
     );
 
     const payload = {
-      id: inputData.id,
       propertyName: inputData.propertyName,
       street: inputData.street,
       barangay: inputData.barangay,
@@ -202,11 +201,14 @@ const CreateListingForm = ({ showModal, setShowModal }) => {
                   value={inputData.propertyType}
                   onChange={handleChangeInputs}
                 >
-                  <option value="apartment">Select Property Type</option>
+                  <option disabled>Select Property Type</option>
                   <option value="apartment">Apartment</option>
                   <option value="house">House</option>
                   <option value="condo">Condominium</option>
                   <option value="townhouse">Townhouse</option>
+                  <option value="bedspace">Bedspace</option>
+                  <option value="sharedroom">Shared</option>
+                  <option value="dormitory">Dormitory</option>
                 </select>
               </div>
             </div>

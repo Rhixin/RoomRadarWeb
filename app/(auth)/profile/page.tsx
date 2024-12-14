@@ -1,11 +1,11 @@
 // Profile Page (app/(auth)/profile/page.tsx)
-'use client';
+"use client";
 
-import { useState } from 'react';
-import ChangePassword from './changepassword/page';
-import EditProfile from './edit/page';
-import MyListings from './mylistings/page';
-import Navbar from '@/components/navbar/navbar'; // Ensure Navbar only includes the sidebar once
+import { useState } from "react";
+import ChangePassword from "./changepassword/page";
+import EditProfile from "./edit/page";
+import MyListings from "./mylistings/page";
+import Navbar from "@/components/navbar/navbar"; // Ensure Navbar only includes the sidebar once
 import {
   ArrowLeft,
   User,
@@ -14,52 +14,54 @@ import {
   Star,
   Settings,
   LogOut,
-} from 'lucide-react';
+} from "lucide-react";
 
 const Profile = () => {
-  const [activeSection, setActiveSection] = useState('profile');
-  const [profilePic, setProfilePic] = useState('/images/landlord_placeholder.jpg');
+  const [activeSection, setActiveSection] = useState("profile");
+  const [profilePic, setProfilePic] = useState(
+    "/images/landlord_placeholder.jpg"
+  );
 
   const sections = [
     {
-      name: 'profile',
-      label: 'Edit Profile',
+      name: "profile",
+      label: "Edit Profile",
       icon: <User className="mr-2 w-5 h-5" />,
     },
     {
-      name: 'password',
-      label: 'Change Password',
+      name: "password",
+      label: "Change Password",
       icon: <Lock className="mr-2 w-5 h-5" />,
     },
     {
-      name: 'listings',
-      label: 'My Listings',
+      name: "listings",
+      label: "My Listings",
       icon: <House className="mr-2 w-5 h-5" />,
     },
     {
-      name: 'reviews',
-      label: 'My Reviews',
+      name: "reviews",
+      label: "My Reviews",
       icon: <Star className="mr-2 w-5 h-5" />,
     },
     {
-      name: 'settings',
-      label: 'Settings',
+      name: "settings",
+      label: "Settings",
       icon: <Settings className="mr-2 w-5 h-5" />,
     },
     {
-      name: 'logout',
-      label: 'Log Out',
+      name: "logout",
+      label: "Log Out",
       icon: <LogOut className="mr-2 w-5 h-5" />,
     },
   ];
 
   const renderSection = () => {
     switch (activeSection) {
-      case 'password':
+      case "password":
         return <ChangePassword />;
-      case 'edit':
+      case "edit":
         return <EditProfile />;
-      case 'listings':
+      case "listings":
         return <MyListings />;
       default:
         return <EditProfile />;
@@ -68,7 +70,8 @@ const Profile = () => {
 
   return (
     <div className="overflow-hidden h-screen">
-      
+      <Navbar navbarType={2}></Navbar>
+
       <div className="flex h-full bg-gray-100">
         {/* Sidebar */}
         <div className="w-1/4 bg-white shadow-md h-full px-4 py-6">
@@ -76,7 +79,7 @@ const Profile = () => {
           <div className="text-center mb-6">
             <button
               className="text-blue-500 hover:text-blue-700 absolute top-6 left-6"
-              onClick={() => console.log('Go Back')}
+              onClick={() => console.log("Go Back")}
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
@@ -95,8 +98,8 @@ const Profile = () => {
                 onClick={() => setActiveSection(section.name)}
                 className={`flex items-center w-full px-4 py-3 rounded-lg transition-all ${
                   activeSection === section.name
-                    ? 'bg-blue-500 text-white shadow-md'
-                    : 'hover:bg-gray-100 text-gray-700'
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "hover:bg-gray-100 text-gray-700"
                 }`}
               >
                 {section.icon}

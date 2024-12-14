@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "@/components/navbar/navbar";
 import {
   Share,
@@ -28,12 +28,15 @@ import LandlordDetails from "@/components/listingdetails/landlorddetails";
 import LocationPreview from "@/components/listingdetails/locationpreview";
 import { BsDoorOpenFill } from "react-icons/bs";
 import { FaBed } from "react-icons/fa";
+import { CgArrowLongRight } from "react-icons/cg";
 import { FaShower } from "react-icons/fa";
 import { RiMessage2Fill } from "react-icons/ri";
 import { IoCallSharp } from "react-icons/io5";
 import StreetViewPanorama from "@/components/panorama/streetviewpanorama";
 
+
 const ListingDetails = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const images = [
     "/images/testing-1.avif",
@@ -89,6 +92,11 @@ const ListingDetails = () => {
     maintenance: { icon: <Construction size={24} />, label: "Maintenance" },
     electricity: { icon: <Zap size={24} />, label: "Electric" },
   };
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+  
 
   return (
     <>
@@ -190,114 +198,169 @@ const ListingDetails = () => {
               />
             </div>
           </div>
+        
 
-          {/* MONTHLY RATE*/}
 
-          <div className="mt-28 flex flex-row justify-between items-center">
+        <div className="mt-28 flex flex-row justify-between">
             <div>
-              <span className="font-bold text-[2.2rem]">
-                Php {listing.monthlyRate}
-              </span>
-              <span className="text-lg"> / month</span>
-            </div>
-            <div className="flex gap-14 text-lg flex-row items-center justify-center text-tertiary font-light">
-              <span className="flex gap-2 items-center">
-                <BsDoorOpenFill></BsDoorOpenFill>
-                <h1>{listing.numOfBedrooms} Rooms</h1>
-              </span>
-              <span className="flex gap-2 items-center">
-                <FaBed></FaBed>
-                <h1>{listing.numOfBeds} Beds</h1>
-              </span>
-              <span className="flex gap-2 items-center">
-                <FaShower></FaShower>
-                <h1>{listing.numOfBathrooms} Bathrooms</h1>
-              </span>
-            </div>
-          </div>
-
-          {/* LANDLORD DETAILS */}
-          <div className="mt-4 border-y border-faded py-6 flex flex-row justify-between">
-            <div className="flex gap-4 flex-row items-center">
-              <img
-                className="w-16 rounded-full cursor-pointer"
-                src="/images/landlord_placeholder.jpg"
-                alt="profile"
-              />
-
-              <span>
-                <p className="text-2xl font-bold">Aling Merna</p>
-                <p className="text-sm">Landlord</p>
-              </span>
-            </div>
-            <span className="mx-8 flex items-center gap-6">
-              <RiMessage2Fill className="text-3xl hover:scale-110 transition  text-tertiary cursor-pointer" />
-              <IoCallSharp className="text-3xl hover:scale-110 transition  text-tertiary cursor-pointer" />
-            </span>
-          </div>
-
-          <div className="flex flex-row mt-8">
-            {/* AMMENETIES */}
-            <div className="flex-1">
-              <h2 className="text-xl sm:text-2xl font-semibold mb-4">
-                Ammenities
-              </h2>
-              <div>
-                {listing.checkedAmenities.map((item) => (
-                  <div key={item} className="flex flex-row my-4 gap-2">
-                    {ammenitiesIcons[item].icon} {ammenitiesIcons[item].label}
+              <h1 className="text-[25px] font-bold">
+                {listing.propertyType + " in " + listing.barangay + ", " + listing.municipality}
+              </h1>
+            <section className="mt-5">
+              <div className="mr-10">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src="/images/landlord_placeholder.jpg"
+                      alt="Landlord"
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                      <div>
+                        <h3 className="text-xl font-semibold">Aling Merna</h3>
+                        <p className="text-gray-600">Landlord</p>
+                      </div>
                   </div>
-                ))}
-              </div>
-
-              {listing.isAllowPets && (
-                <div className="flex flex-row my-4 gap-2">
-                  {ammenitiesIcons.pet.icon} {ammenitiesIcons.pet.label}
+                  <div className="flex space-x-4">
+                    <RiMessage2Fill className="text-2xl text-tertiary cursor-pointer hover:scale-110 transition" />
+                    <IoCallSharp className="text-2xl text-tertiary cursor-pointer hover:scale-110 transition" />
+                  </div>
                 </div>
-              )}
-            </div>
+                <hr className="mt-5"></hr>
+                <h1 className="text-m font-bold mt-3">House Rules</h1>
+                  {listing.rulesArray.map((rule, index) => (
+                    <div key={index} className="flex flex-row my-4 gap-2">
+                      <span className="font-semibold text-primary">{index + 1}.</span>
+                      <span>{rule}</span>
+                    </div>
+                  ))}
 
-            {/* ADDITIONAL COSTS */}
-            <div className="flex-1">
-              <h2 className="text-xl sm:text-2xl font-semibold mb-4">
-                Additional Fees
-              </h2>
-              <div>
-                {listing.checkedAdditionalFees.map((item) => (
-                  <div key={item} className="flex flex-row my-4 gap-2">
-                    {additionalFees[item].icon} {additionalFees[item].label}
+                <hr className="mt-5"></hr>
+
+                {/* description */}
+                <div className="mt-5">
+                  <p className="w-full">
+                    {listing.description
+                      .split(' ') 
+                      .slice(0, 35) 
+                      .join(' ') 
+                      + (listing.description.split(' ').length > 20 ? '...' : '')} 
+                  </p>
+                  ...
+                  <br></br>
+                  {listing.description.split(" ").length > 35 && (
+                    <button
+                      onClick={toggleModal}
+                      className="mt-2 font-bold underline"
+                    >
+                      Show More >
+                    </button>
+                  )}
+                </div>
+
+                <hr className="mt-5"></hr>
+
+                {isModalOpen && (
+                  <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white p-6 rounded-lg w-1/2 max-w-lg relative">
+                      {/* Close Button (X) */}
+                      <button
+                        onClick={toggleModal}
+                        className="absolute top-2 right-2 text-2xl font-bold text-black hover:text-red-500"
+                      >
+                        x
+                      </button>
+
+                      <h2 className="text-2xl font-semibold mb-4">About this space</h2>
+                      <p className="text-justify">{listing.description}</p>
+                      </div>
                   </div>
-                ))}
+                )}
+
+                {/* LOCATION */}
+                <div className="mt-12">
+                  <h2 className="text-xl sm:text-2xl font-semibold mb-4">
+                    Location
+                  </h2>
+                      <iframe
+                        width="600"
+                        height="450"
+                        style={{ border: 0 }}
+                        loading="lazy"
+                        allowFullScreen
+                        referrerPolicy="no-referrer-when-downgrade"
+                        src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8&q=${listing.latitude},${listing.longitude}`}
+                        title="Embedded Google Map"
+                      ></iframe>
+                </div>
+
+                
+              </div>
+            </section>
+        </div>
+
+        <div className="border border-gray-300 rounded-[12px] p-6 w-full md:w-3/4 h-fit shadow-lg sticky top-40 bg-white h-full">
+          <div className="justify-between items-center">
+              <div>
+                <span className="text-4xl font-bold text-primary">
+                ₱ {listing.monthlyRate}
+                </span>
+                <span className="text-gray-600"> / month</span>
+              </div>
+              <div className="flex space-x-4 text-gray-600 text-sm">
+                <div className="flex items-center space-x-2">
+                  <BsDoorOpenFill />
+                  <span>{listing.numOfBedrooms} Rooms</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <FaBed />
+                  <span>{listing.numOfBeds} Beds</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <FaShower />
+                  <span>{listing.numOfBathrooms} Bathrooms</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-row mt-8">
+              {/* AMMENETIES */}
+              <div className="flex-1">
+                <h2 className="text-sm font-semibold mb-4">
+                What this place offers
+                </h2>
+                <div>
+                  {listing.checkedAmenities.map((item) => (
+                    <div key={item} className="flex flex-row my-4 gap-2">
+                      {ammenitiesIcons[item].icon} {ammenitiesIcons[item].label}
+                    </div>
+                  ))}
+                </div>
+
+                {listing.isAllowPets && (
+                  <div className="flex flex-row my-4 gap-2">
+                    {ammenitiesIcons.pet.icon} {ammenitiesIcons.pet.label}
+                  </div>
+                )}
+              </div>
+
+              {/* ADDITIONAL COSTS */}
+              <div className="flex-1">
+                <h2 className="sm:text font-semibold mb-4">
+                  Additional Fees
+                </h2>
+                <div>
+                  {listing.checkedAdditionalFees.map((item) => (
+                    <div key={item} className="flex flex-row my-4 gap-2">
+                      {additionalFees[item].icon} {additionalFees[item].label}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-
-          {/* DESCRIPTION */}
-          <div className="mt-24">
-            <h2 className="text-xl sm:text-2xl font-semibold mb-4">
-              About This Place
-            </h2>
-            <div className=" flex flex-row">
-              <div className="flex-1 p-4 bg-blue-50 border-l-4 border-blue-400 text-blue-800 italic text-lg font-archivo shadow-md">
-                <p className="quote-mark">“</p>
-                <p>{listing.description}</p>
-                <p className="quote-mark text-right">”</p>
-              </div>
-
-              <div className="flex flex-col justify-end items-end flex-1">
-                <iframe
-                  width="600"
-                  height="450"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  allowFullScreen
-                  referrerPolicy="no-referrer-when-downgrade"
-                  src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyD74dEXewfZu6N_1t97KzYxAbt_V9IkbU8&q=${listing.latitude},${listing.longitude}`}
-                  title="Embedded Google Map"
-                ></iframe>
-              </div>
-            </div>
-          </div>
+        </div>
+                   
+          
 
           {/* PANORMA */}
           <div className="flex flex-col mt-24 mb-16">

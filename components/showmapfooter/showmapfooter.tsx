@@ -13,6 +13,14 @@ const ShowMapFooter = ({ footerType }) => {
     setShowModal((prev) => !prev);
   };
 
+  const handleToggleFooter = () => {
+    if (footerType === 1) {
+      window.location.href = "/map";
+    } else {
+      window.location.href = "/home";
+    }
+  };
+
   return (
     <>
       <CreateListingForm
@@ -22,7 +30,10 @@ const ShowMapFooter = ({ footerType }) => {
 
       <div className="fixed bottom-0 left-0 w-full flex justify-center py-8">
         {/* Map View Button */}
-        <button className="relative flex items-center gap-2 bg-tertiary rounded-full px-5 py-5 hover:scale-110 transition-transform duration-200 text-white">
+        <button
+          className="relative flex items-center gap-2 bg-tertiary rounded-full px-5 py-5 hover:scale-110 transition-transform duration-200 text-white"
+          onClick={handleToggleFooter}
+        >
           <p className="text-sm">
             {footerType === 1 ? "Map View" : "List View"}
           </p>

@@ -9,7 +9,7 @@ import BoardingHouseMapView from "../boardinghousemapview/boardinghousemapview";
 
 const containerStyle = {
   width: "100%",
-  height: "80.5vh",
+  height: "80.1vh",
 };
 
 const RoomRadarMap = ({ arrayListings }) => {
@@ -91,6 +91,12 @@ const RoomRadarMap = ({ arrayListings }) => {
       onClickHandler={null}
       containerStyle={containerStyle}
       onLoadMapHandler={handleMapLoad}
+      options={{
+        icon: {
+          url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Replace with the desired color
+          scaledSize: new google.maps.Size(40, 40), // Adjust size (optional)
+        },
+      }}
     >
       {/* Circle rendered dynamically */}
       {currentLocation && (
@@ -115,7 +121,7 @@ const RoomRadarMap = ({ arrayListings }) => {
       {/* Display all data components */}
       {arrayListings.map((listing, index) => (
         <BoardingHouseMapView
-          key={index}
+          key={listing.boardingHouseId}
           {...listing}
           handleMarkerClick={handleMarkerClick}
           setClickedLocation={setClickedLocation}

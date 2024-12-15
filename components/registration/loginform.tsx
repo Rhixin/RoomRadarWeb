@@ -32,6 +32,7 @@ const LoginForm = ({ toggleForm }) => {
         //Successful log in then redirect
         //TODO: Handle session or token
         alert("Logged in successfully!");
+        localStorage.setItem("userSession", JSON.stringify(response));
         router.push("/home");
       } else {
         alert("Login failed. Check credentials.");

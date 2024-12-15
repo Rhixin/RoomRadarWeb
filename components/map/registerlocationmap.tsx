@@ -44,16 +44,9 @@ const RegisterLocationMap = ({ setlistingLocation }) => {
       containerStyle={containerStyle}
       onClickHandler={handleMapClick}
       onLoadMapHandler={handleMapLoad}
+      options={null}
     >
-      {clickedLocation && (
-        <Marker
-          position={clickedLocation}
-          icon={{
-            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Replace with the desired color
-            scaledSize: new google.maps.Size(40, 40), // Adjust size (optional)
-          }}
-        />
-      )}
+      {clickedLocation && <Marker position={clickedLocation} />}
     </CustomMap>
   );
 };

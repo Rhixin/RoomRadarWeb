@@ -85,6 +85,8 @@ const MenuBar = ({ isVisible, setIsVisible }) => {
     }
   };
 
+  const userSession = JSON.parse(localStorage.getItem("userSession") || "null");
+
   return (
     <div
       className={`absolute top-0 right-0 h-screen w-[20vw] bg-white shadow-md rounded-l-lg transition-transform duration-300 ${
@@ -103,7 +105,11 @@ const MenuBar = ({ isVisible, setIsVisible }) => {
               alt="Profile"
               className="w-20 h-20 rounded-full mb-2"
             />
-            <h1 className="text-2xl font-bold">Mingyu Kim</h1>
+            <h1 className="text-2xl font-bold">
+              {userSession.data.profile.firstName +
+                " " +
+                userSession.data.profile.lastName}
+            </h1>
           </div>
         </div>
 
@@ -113,6 +119,11 @@ const MenuBar = ({ isVisible, setIsVisible }) => {
               key={section.name}
               onClick={() => {
                 setActiveSection(section.name);
+
+                if (section.name == "logout") {
+                  localStorage.removeItem("userSession");
+                  window.location.href = "/";
+                }
               }}
               className={`flex items-center w-full px-4 py-3 rounded-md transition-colors ${
                 activeSection === section.name

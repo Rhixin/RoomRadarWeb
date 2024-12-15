@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "@/components/navbar/navbar";
 import {
   Share,
@@ -33,9 +33,20 @@ import { FaShower } from "react-icons/fa";
 import { RiMessage2Fill } from "react-icons/ri";
 import { IoCallSharp } from "react-icons/io5";
 import StreetViewPanorama from "@/components/panorama/streetviewpanorama";
+import { useRouter } from "next/navigation";
 
 
 const ListingDetails = () => {
+  const [id, setId] = useState(null);
+
+  useEffect(() => {
+    const currentUrl = window.location.pathname; // Get the current URL
+    const idFromUrl = currentUrl.split('/')[2]; // Assuming the URL is something like /listings/1
+    setId(idFromUrl); // Set the ID state
+  }, []);
+
+
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const images = [
@@ -96,7 +107,7 @@ const ListingDetails = () => {
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
-  
+
 
   return (
     <>

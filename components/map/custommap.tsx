@@ -8,6 +8,7 @@ const CustomMap = ({
   containerStyle,
   onLoadMapHandler,
   children,
+  options,
 }) => {
   // Context or Values from Map Context Provider Component for easy access
   const context = useContext(MapContext);
@@ -51,7 +52,7 @@ const CustomMap = ({
         }}
       >
         {/* Marker for user's current location */}
-        <Marker position={currentLocation} />
+        <Marker position={currentLocation} options={options} />
         {children}
       </GoogleMap>
     </>

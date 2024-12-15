@@ -4,8 +4,12 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import { IoCall } from "react-icons/io5";
+import { CiStar } from "react-icons/ci";
+import { FaStar } from "react-icons/fa";
 
 const ListingCard = ({
+  boardingHouseId,
+  propertyName,
   location,
   distance,
   price,
@@ -28,9 +32,19 @@ const ListingCard = ({
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  function seeDetails() {
+    // alert(boardingHouseId);
+    window.location.href = `/listings/${boardingHouseId}`;
+  }
+
   return (
     <div className="group">
-      <div className="relative cursor-pointer">
+      <div
+        className="relative cursor-pointer"
+        onClick={() => {
+          seeDetails();
+        }}
+      >
         <div className="w-full aspect-square rounded-xl overflow-hidden relative">
           <Image
             src={images[currentImageIndex]}
@@ -107,10 +121,11 @@ const ListingCard = ({
         </div>
 
         <div className="mt-2">
-          <div className="flex justify-between items-center">
-            <h3 className="text-sm">{location}</h3>
-            <div className="flex items-center gap-1">
-              <span>★</span>
+          <h3 className="text-[1rem] font-semibold">{propertyName}</h3>
+          <div className="flex justify-between items-center gap-8">
+            <h3 className="text-[.8rem] text-gray-500">{location}</h3>
+            <div className="flex items-center">
+              <FaStar className="text-yellow-300" />
               <span className="text-sm">{rating}</span>
             </div>
           </div>

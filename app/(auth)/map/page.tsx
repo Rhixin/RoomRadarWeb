@@ -1,52 +1,70 @@
-import Navbar from "@/components/navbar/navbar";
+"use client";
 
-import BoardingHouseMapView, {
-  BoardingHouseMapViewProps,
-  LatLng,
-} from "@/components/boardinghousemapview/boardinghousemapview";
-import MapComponent from "@/components/map/mapcomponent";
-import ShowMapFooter from "@/components/showmapfooter/showmapfooter";
+import { useEffect, useState } from "react";
+import Navbar from "@/components/navbar/navbar";
 import RoomRadarMap from "@/components/map/roomradarmap";
+import ShowMapFooter from "@/components/showmapfooter/showmapfooter";
+import { getAllListings } from "@/lib/listings";
+
+// Transform server data to props
+const transformServerDataToProps = (serverData: any) => {
+  return {
+    boardingHouseId: serverData.boardingHouseId,
+    propertyName: serverData.propertyName,
+    mapLocation: {
+      lat: serverData.latitude,
+      lng: serverData.longitude,
+    },
+    location: "Cebu, Philippines", // Placeholder location, update as needed
+    distance: "5 kilometers away", // Placeholder, to be calculated
+    price: serverData.price.toString(), // Convert price to string
+    rating: serverData.truncatedAverageRating, // Rating from the server
+    images: ["/images/testing-1.avif", "/images/testing-2.avif"], // Placeholder images
+    isFavorite: false, // Placeholder value, adjust based on requirements
+    landlord: `${serverData.landLordFirstName}`, // Concatenate first and last name
+    landlordContactDetails: serverData.landLordContactNumber, // Landlord contact number
+  };
+};
 
 const Map = () => {
-  //Payload example
-  const boardingHouseProps1: BoardingHouseMapViewProps = {
-    mapLocation: {
-      lat: 10.293647,
-      lng: 123.867631,
-    }, //placeholder sa try myuy location sa
-    location: "Cebu City, Philippines",
-    distance: "5 kilometers away", //to be calculated pa
-    price: "2,225",
-    rating: 4.9,
-    images: ["/images/testing-1.avif", "/images/testing-2.avif"],
-    isFavorite: false,
-    landlord: "John Doe",
-    landlordContactDetails: "09271935386",
+  // Use state to manage listings
+  const [listings, setListings] = useState([]);
+
+  // Fetch listings from the API
+  const fetchListings = async () => {
+    try {
+      const response = await getAllListings();
+
+      // Check if response and response.data are valid
+      if (response && response.data && Array.isArray(response.data)) {
+        // Convert the listings from the server to props format
+        const convertedListings = response.data.map((listing: any) =>
+          transformServerDataToProps(listing)
+        );
+
+        // Update the state with the transformed listings
+        setListings(convertedListings);
+        console.log("Fetched listings:", convertedListings);
+      } else {
+        console.error(
+          "Error: response.data is either null, undefined, or not an array."
+        );
+      }
+    } catch (err) {
+      console.error("Error fetching listings:", err);
+    }
   };
 
-  const boardingHouseProps2: BoardingHouseMapViewProps = {
-    mapLocation: {
-      lat: 10.243647,
-      lng: 123.767631,
-    }, //placeholder sa try myuy location sa
-    location: "Cebu City, Philippines",
-    distance: "5 kilometers away", //to be calculated pa
-    price: "2,225",
-    rating: 4.9,
-    images: ["/images/testing-1.avif", "/images/testing-2.avif"],
-    isFavorite: false,
-    landlord: "John Doe",
-    landlordContactDetails: "09271935386",
-  };
-
-  const arrayListings = [boardingHouseProps1, boardingHouseProps2];
+  // Use useEffect to call fetchListings only once when the component mounts
+  useEffect(() => {
+    fetchListings();
+  }, []); // Empty dependency array means it runs only on component mount
 
   return (
     <>
-      <Navbar navbarType={1}></Navbar>
-      <RoomRadarMap arrayListings={arrayListings}></RoomRadarMap>
-      <ShowMapFooter footerType={2}></ShowMapFooter>
+      <Navbar navbarType={1} />
+      <RoomRadarMap arrayListings={listings} />
+      <ShowMapFooter footerType={2} />
     </>
   );
 };

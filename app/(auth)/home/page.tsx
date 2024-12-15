@@ -188,7 +188,7 @@ const Home = () => {
   const transformServerDataToProps = (serverData: any) => {
     return {
       boardingHouseId: serverData.boardingHouseId,
-      propertyName: serverData.propertyName,
+      propertyName: serverData.BoardingHouseName,
       mapLocation: {
         lat: serverData.latitude,
         lng: serverData.longitude,
